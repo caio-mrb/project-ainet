@@ -9,5 +9,11 @@ class Screening extends Model
 {
     use HasFactory;
 
-    
+    protected $fillable = [
+        'movie_id',
+        'theate_id',
+        'date',
+        'start_time',
+    ];    
+
 }

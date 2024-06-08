@@ -20,5 +20,4 @@ class Purchase extends Model
         'payment_ref',
         'receipt_pdf_filename',
     ];
-
 }
