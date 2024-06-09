@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\MovieController;
 use App\Http\Controllers\AdministrativeController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DisciplineController;
@@ -22,6 +23,13 @@ Route::view('/', 'home')->name('home');
 Route::get('courses/showcase', [CourseController::class, 'showCase'])
     ->name('courses.showcase')
     ->can('viewShowCase', Course::class);
+
+    Route::get('/movies/{id}', [MovieController::class, 'show'])
+    ->name('movies.show');
+
+    Route::get('movies/', [MovieController::class, 'index'])
+    ->name('movies.index');
+
 
 Route::get('courses/{course}/curriculum', [CourseController::class, 'showCurriculum'])
     ->name('courses.curriculum')

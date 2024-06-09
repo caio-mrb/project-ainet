@@ -18,7 +18,7 @@
     <div class="min-h-screen bg-gray-100 dark:bg-gray-800">
 
         <!-- Navigation Menu -->
-        <nav class="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800">
+        <nav class="bg-gradient-to-r from-primary-red to-secondary-red dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800">
             <!-- Navigation Menu Full Container -->
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <!-- Logo + Menu Items + Hamburger -->
@@ -26,7 +26,7 @@
                     <!-- Logo -->
                     <div class="shrink-0 -ms-4">
                         <a href="{{ route('home')}}">
-                            <div class="h-16 w-40 bg-cover dark:hidden">
+                            <div class="flex align-center h-16 w-40 bg-cover dark:hidden">
                             <x-logo/></div>
                         </a>
                     </div>
@@ -195,6 +195,12 @@
                             selectable="1"
                             href="{{ route('login') }}"
                             selected="{{ Route::currentRouteName() == 'login'}}"
+                            />
+                            <x-menus.menu-item
+                            content="Sign Up"
+                            selectable="1"
+                            href="{{ route('sign-up') }}"
+                            selected="{{ Route::currentRouteName() == 'sign-up'}}"
                             />
                         @endauth
                     </div>

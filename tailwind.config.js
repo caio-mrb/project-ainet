@@ -11,6 +11,7 @@ export default {
         'primary-red': '#be3144',
         'secondary-red': '#d25062',
         'primary-gray': '#d3d6db',
+        'secondary-gray': '#b7bcc4',
       },
     },
   },
