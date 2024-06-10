@@ -2,14 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Models\Customer;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
-class CustomerController extends Controller
+class CustomerController extends \Illuminate\Routing\Controller
 {
+
+    use AuthorizesRequests;
+
+    public function __construct()
+    {
+        $this->authorizeResource(Customer::class);
+    }
+
     public function edit(Customer $customer): View
     {
-        return view('customer.edit')
+        return view('customers.edit')
             ->with('customer', $customer);
     }
 }

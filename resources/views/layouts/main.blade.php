@@ -205,7 +205,7 @@
                         @endauth
                     </div>
                     <!-- Hamburger -->
-                    <div class="absolute right-0 top-0 flex sm:hidden pt-3 pe-3 text-black dark:text-gray-50">
+                    <div class="absolute right-0 top-0 flex sm:hidden pt-3 pe-3 text-primary-gray dark:text-gray-50">
                         <button id="hamburger_btn">
                             <svg class="h-8 w-8" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                                 <path id="hamburger_btn_open" stroke-linecap="round" stroke-linejoin="round"

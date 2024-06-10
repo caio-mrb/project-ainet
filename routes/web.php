@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\AdministrativeController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\DisciplineController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\TeacherController;
@@ -18,7 +20,8 @@ use Illuminate\Support\Facades\Route;
 
 /* ----- PUBLIC ROUTES ----- */
 
-Route::view('/', 'home')->name('home');
+Route::get('/', [MovieController::class, 'index'])
+    ->name('home');
 
 Route::get('courses/showcase', [CourseController::class, 'showCase'])
     ->name('courses.showcase')
@@ -34,10 +37,22 @@ Route::get('courses/{course}/curriculum', [CourseController::class, 'showCurricu
     ->name('courses.curriculum')
     ->can('viewCurriculum', Course::class);
 
+    
+    Route::get('/administratives/{administrative}/edit', [AdministrativeController::class, 'edit'])
+        ->name('administratives.edit');
+        
+
+    Route::get('/employees/{employee}/edit', [EmployeeController::class, 'edit'])
+        ->name('employees.edit');
+
+    Route::get('/customers/{customer}/edit', [CustomerController::class, 'edit'])
+        ->name('customers.edit');
+
 
 /* ----- Non-Verified users ----- */
 Route::middleware('auth')->group(function () {
     Route::get('/password', [ProfileController::class, 'editPassword'])->name('profile.edit.password');
+    
 });
 
 /* ----- Verified users ----- */
@@ -53,11 +68,9 @@ Route::middleware('auth', 'verified')->group(function () {
     // });
 // CHECK THIS -------- -------- -------- --------
 
-    Route::get('/administratives/{administrative}/edit', [AdministrativeController::class, 'edit'])->name('administratives.edit');
-    Route::get('/employees/{employee}/edit', [EmployeeController::class, 'edit'])->name('employees.edit');
-    Route::get('/customers/{customer}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
 
-    Route::view('/dashboard', 'dashboard')->name('dashboard');
+    Route::view('/dashboard', 'dashboard')
+        ->name('dashboard');
 
     Route::delete('courses/{course}/image', [CourseController::class, 'destroyImage'])
         ->name('courses.image.destroy')

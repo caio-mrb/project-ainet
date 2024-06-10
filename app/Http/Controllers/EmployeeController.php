@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Models\User;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class EmployeeController extends Controller
 {
     public function edit(User $employee): View
     {
-        return view('employee.edit')
+        return view('employees.edit')
             ->with('employee', $employee);
     }
 }
