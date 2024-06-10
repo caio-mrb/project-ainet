@@ -52,4 +52,13 @@ class User extends Authenticatable
     {
         return $this->hasOne(User::class, 'id');
     }
+
+    public function getPhotoFullUrlAttribute()
+    {
+        if ($this->photo_filename && Storage::exists("public/photos/{$this->photo_filename}")) {
+            return asset("storage/photos/{$this->photo_filename}");
+        } else {
+            return asset("storage/photos/anonymous.png");
+        }
+    }
 }
