@@ -15,10 +15,9 @@ class Table extends Component
         public object $movies,
         public bool $showView = true,
         public bool $showEdit = true,
-        public bool $showDelete = true,
-    ) {
-        //
-    }
+        public bool $showDelete = true,  
+    )
+    {}
 
     /**
      * Get the view / contents that represent the component.
