@@ -108,7 +108,7 @@ return [
     | You can specify the number of seconds it listens or disable with `false`
     |
     */
-    'dump_watcher' => false,
+    'dump_watcher' => true,
 
     /*
     |--------------------------------------------------------------------------
