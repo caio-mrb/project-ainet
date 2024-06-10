@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-PT">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
@@ -18,7 +18,7 @@
     <div class="min-h-screen bg-gray-100 dark:bg-gray-800">
 
         <!-- Navigation Menu -->
-        <nav class="bg-gradient-to-r from-primary-red to-secondary-red dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800">
+        <nav class="bg-primary-red dark:bg-gray-900 border-b-8 border-secondary-red dark:border-gray-800">
             <!-- Navigation Menu Full Container -->
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <!-- Logo + Menu Items + Hamburger -->
@@ -171,8 +171,8 @@
                                 selectable="0"
                                 :href="match(Auth::user()->type) {
                                     'A' => route('administratives.edit', ['administrative' => Auth::user()]),
-                                    'T' => route('teachers.edit', ['teacher' => Auth::user()->teacher]),
-                                    'S' => route('students.edit', ['student' => Auth::user()->student]),
+                                    'E' => route('employees.edit', ['employee' => Auth::user()->employee]),
+                                    'C' => route('customers.edit', ['customer' => Auth::user()->customer]),
                                 }"/>
                             <x-menus.submenu-item
                                 content="Change Password"
@@ -199,8 +199,8 @@
                             <x-menus.menu-item
                             content="Sign Up"
                             selectable="1"
-                            href="{{ route('sign-up') }}"
-                            selected="{{ Route::currentRouteName() == 'sign-up'}}"
+                            href="{{ route('register') }}"
+                            selected="{{ Route::currentRouteName() == 'register'}}"
                             />
                         @endauth
                     </div>
@@ -219,17 +219,13 @@
             </div>
         </nav>
 
-        <!-- Page Heading -->
+        <!-- Page Heading -- >
         <header class="bg-white dark:bg-gray-900 shadow">
             <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                <h4 class="mb-1 text-base text-gray-500 dark:text-gray-400 leading-tight">
-                    Department of Computer Engineering
-                </h4>
-                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                    @yield('header-title')
-                </h2>
+                
             </div>
         </header>
+        -->
 
         <main>
             <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
