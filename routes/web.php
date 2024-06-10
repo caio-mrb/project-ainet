@@ -30,7 +30,6 @@ Route::get('/movies/{id}', [MovieController::class, 'show'])
 Route::get('movies/', [MovieController::class, 'index'])
     ->name('movies.index');
 
-
 Route::get('courses/{course}/curriculum', [CourseController::class, 'showCurriculum'])
     ->name('courses.curriculum')
     ->can('viewCurriculum', Course::class);
