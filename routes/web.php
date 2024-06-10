@@ -53,6 +53,9 @@ Route::middleware('auth', 'verified')->group(function () {
     // });
 // CHECK THIS -------- -------- -------- --------
 
+    Route::get('/administratives/{administrative}/edit', [AdministrativeController::class, 'edit'])->name('administratives.edit');
+    Route::get('/employees/{employee}/edit', [EmployeeController::class, 'edit'])->name('employees.edit');
+    Route::get('/customers/{customer}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
 
     Route::view('/dashboard', 'dashboard')->name('dashboard');
 

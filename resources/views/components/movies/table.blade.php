@@ -27,7 +27,7 @@
                 <td class="px-2 py-2 text-left">{{ $movie->genre_code }}</td>
                 <td class="px-2 py-2 text-right hidden sm:table-cell">{{ $movie->year }}</td>
                 <td class="px-2 py-2 text-right hidden sm:table-cell"><x-button element="a" type="light" text="Ver mais" class="uppercase ms-4"
-                href="{{ route('movies.show', ['id' => $movie->id]) }}"/></td>  
+                    href="{{ route('movies.show', ['id' => $movie->id]) }}"/></td>  
                 @if($showView)
                     @can('view', $movie)
                         <td>

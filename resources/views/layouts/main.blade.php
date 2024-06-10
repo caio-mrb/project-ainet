@@ -166,13 +166,20 @@
                             @endcan
                             @auth
                             <hr>
-                            
+                            <x-menus.submenu-item
+                                content="Profile"
+                                selectable="0"
+                                :href="match(Auth::user()->type) {
+                                    'A' => route('administratives.edit', ['administrative' => Auth::user()]),
+                                    'E' => route('employees.edit', ['employee' => Auth::user()->employee]),
+                                    'C' => route('customers.edit', ['customer' => Auth::user()->customer]),
+                                }"/>
                             <x-menus.submenu-item
                                 content="Change Password"
                                 selectable="0"
                                 href="{{ route('profile.edit.password') }}"/>
                             @endauth
-                            <hr>
+                            <hr class="border-gray-200">
                             <form id="form_to_logout_from_menu" method="POST" action="{{ route('logout') }}" class="hidden">
                                 @csrf
                             </form>
