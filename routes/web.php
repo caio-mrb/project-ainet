@@ -24,10 +24,10 @@ Route::get('courses/showcase', [CourseController::class, 'showCase'])
     ->name('courses.showcase')
     ->can('viewShowCase', Course::class);
 
-    Route::get('/movies/{id}', [MovieController::class, 'show'])
+Route::get('/movies/{id}', [MovieController::class, 'show'])
     ->name('movies.show');
 
-    Route::get('movies/', [MovieController::class, 'index'])
+Route::get('movies/', [MovieController::class, 'index'])
     ->name('movies.index');
 
 
