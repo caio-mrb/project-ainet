@@ -21,10 +21,10 @@
         <button data-submenu="{{$uniqueName}}"
             class="grow inline-flex items-center h-16
                 px-3 sm:px-0.5 md:px-1 lg:px-2 pt-1
-                text-sm font-medium text-gray-500 dark:text-gray-400
-                border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-300
-                focus:outline-none focus:text-gray-700 dark:focus:text-gray-300
-                hover:bg-gray-100 dark:hover:bg-gray-800 sm:hover:bg-white dark:sm:hover:bg-gray-900">
+                text-sm font-medium text-primary-gray hover:text-gray-100 dark:text-gray-400
+                border-b-2 border-transparent hover:underline hover:decoration-2 hover:decoration-secondary-red dark:hover:text-gray-300
+                focus:outline-none focus:text-gray-100 dark:focus:text-gray-300
+                dark:hover:bg-gray-800 dark:sm:hover:bg-gray-900">
     @endif
             {{$content}}
             <div>
