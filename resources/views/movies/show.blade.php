@@ -1,5 +1,5 @@
 @extends('layouts.main')
 
 @section('main')
-    <x-movies.card :movie="$movie" />
+    <x-movies.card :movies="$movie" />
 @endsection
