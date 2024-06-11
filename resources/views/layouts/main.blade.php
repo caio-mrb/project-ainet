@@ -34,50 +34,12 @@
                     <!-- Menu Items -->
                     <div id="menu-container" class="grow flex flex-col sm:flex-row items-stretch
                     invisible h-0 sm:visible sm:h-auto">
-                        <!-- Menu Item: Courses -->
-                        @can('viewShowcase', App\Models\Movie::class)
+                        <!-- Menu Item: Home -->
                             <x-menus.menu-item
-                                content="Movies"
-                                href="{{ route('courses.showcase') }}"
-                                selected="{{ Route::currentRouteName() == 'courses.showcase'}}"
+                                content="Home"
+                                href="{{ route('home') }}"
+                                selected="{{ Route::currentRouteName() == 'home'}}"
                             />
-                        @endcan
-
-                        <!-- Menu Item: Curricula -->
-                        @can('viewCurriculum', App\Models\Course::class)
-                            <x-menus.submenu-full-width
-                                content="Curricula"
-                                selectable="1"
-                                selected="0"
-                                uniqueName="submenu_curricula">
-                                @foreach ($courses as $course)
-                                    <x-menus.submenu-item
-                                    :content="$course->fullName"
-                                    selectable="1"
-                                    selected="0"
-                                    href="{{ route('courses.curriculum', ['course' => $course]) }}"/>
-                                @endforeach
-                            </x-menus.submenu-full-width>
-                        @endcan
-                        <!-- Menu Item: Disciplines -->
-                        @can('viewAny', App\Models\Discipline::class)
-                        <x-menus.menu-item
-                            content="Disciplines"
-                            selectable="1"
-                            href="{{ route('disciplines.index') }}"
-                            selected="{{ Route::currentRouteName() == 'disciplines.index'}}"
-                            />
-                        @endcan
-
-                        <!-- Menu Item: Teachers -->
-                        @can('viewAny', App\Models\Teacher::class)
-                            <x-menus.menu-item
-                                content="Teachers"
-                                selectable="1"
-                                href="{{ route('teachers.index') }}"
-                                selected="{{ Route::currentRouteName() == 'teachers.index'}}"
-                                />
-                        @endcan
 
                         {{-- If user has any of the 4 menu options previlege, then it should show the submenu --}}
                         @if(
@@ -121,15 +83,12 @@
                         <div class="grow"></div>
 
                         <!-- Menu Item: Cart -->
-                        @if (session('cart'))
-                            @can('use-cart')
-                            <x-menus.cart
+                        <x-menus.cart
                                 :href="route('cart.show')"
                                 selectable="1"
                                 selected="{{ Route::currentRouteName() == 'cart.show'}}"
-                                :total="session('cart')->count()"/>
-                            @endcan
-                        @endif
+                                :total="session('cart') ? session('cart')->count() : 0"/>
+                            
 
                         @auth
                         <x-menus.submenu
@@ -237,6 +196,7 @@
                 @if (!$errors->isEmpty())
                         <x-alert type="warning" message="Operation failed because there are validation errors!"/>
                 @endif
+                
                 @yield('main')
             </div>
         </main>

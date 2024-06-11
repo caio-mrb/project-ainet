@@ -20,14 +20,13 @@ use Illuminate\Support\Facades\Route;
 
 /* ----- PUBLIC ROUTES ----- */
 
-Route::get('/', [MovieController::class, 'index'])
+Route::get('/', [MovieController::class, 'handle'])
     ->name('home');
 
 Route::get('courses/showcase', [CourseController::class, 'showCase'])
-    ->name('courses.showcase')
-    ->can('viewShowCase', Course::class);
+    ->name('courses.showcase');
 
-Route::get('/movies/{id}', [MovieController::class, 'show'])
+Route::get('/movies/{movie}', [MovieController::class, 'show'])
     ->name('movies.show');
 
 Route::get('movies/', [MovieController::class, 'index'])
@@ -38,14 +37,14 @@ Route::get('courses/{course}/curriculum', [CourseController::class, 'showCurricu
     ->can('viewCurriculum', Course::class);
 
     
-    Route::get('/administratives/{administrative}/edit', [AdministrativeController::class, 'edit'])
+Route::get('/administratives/{administrative}/edit', [AdministrativeController::class, 'show'])
         ->name('administratives.edit');
         
 
-    Route::get('/employees/{employee}/edit', [EmployeeController::class, 'edit'])
+Route::get('/employees/{employee}/edit', [EmployeeController::class, 'edit'])
         ->name('employees.edit');
 
-    Route::get('/customers/{customer}/edit', [CustomerController::class, 'edit'])
+Route::get('/customers/{customer}/edit', [CustomerController::class, 'edit'])
         ->name('customers.edit');
 
 
@@ -127,7 +126,7 @@ Route::middleware('auth', 'verified')->group(function () {
 /* ----- OTHER PUBLIC ROUTES ----- */
 
 // Use Cart routes should be accessible to the public */
-Route::middleware('can:use-cart')->group(function () {
+
     // Add a discipline to the cart:
     Route::post('cart/{discipline}', [CartController::class, 'addToCart'])
         ->name('cart.add');
@@ -138,7 +137,6 @@ Route::middleware('can:use-cart')->group(function () {
     Route::get('cart', [CartController::class, 'show'])->name('cart.show');
     // Clear the cart:
     Route::delete('cart', [CartController::class, 'destroy'])->name('cart.destroy');
-});
 
 
 //Course show is public.

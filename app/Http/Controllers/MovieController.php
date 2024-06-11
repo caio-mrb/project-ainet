@@ -3,37 +3,83 @@
 namespace App\Http\Controllers;
 
 use App\Models\Movie;
+use App\Models\Genre;
+use App\Models\Screening;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Database\Eloquent\Collection;
 
 
 class MovieController extends Controller
 {
-    public function index(Request $request)
+    public function handle(Request $request)
     {
-        if (isset($queryParameters['title'])) {
-            // Se existir, filtra os resultados pelo título
-            $filteredResults = Movie::where('titulo', $queryParameters['title'])->get();
+        
+        $genres = Genre::all();
+
+        $genre = $request->query('genre');
+        $search = $request->query('search');
+
+        if ($genre || $search) {
+            return $this->search($request, $genres);
         } else {
-            // Se não existir, obtém os primeiros 10 resultados
-            $filteredResults = Movie::
+            return $this->index($request, $genres);
+        }
+    }
+
+    public function index(Request $request, Collection $genres)
+    {        
+        $date = "2022-01-02";
+
+        $moviesQuery = Movie::whereHas('screenings', function ($query) use ($date) {
+            $query->whereDate('date', $date);
+        })->orderBy('year');
+        
+        $movies = $moviesQuery
+            ->paginate(20);
+    
+        // Return the view with the movies
+        return view('movies.index')
+        ->with('movies',$movies)
+        ->with('genres',$genres);
+    }
+
+    public function show(Movie $movie)
+    {
+        return view('movies.show',)
+            ->with('movie',$movie);
+    }
+
+    public function search(Request $request, Collection $genres)
+    {
+        $genre = $request->query('genre');
+        $search = $request->query('search');
+
+        // Initialize the query builder for the Movie model
+        $moviesQuery = Movie::query();
+
+
+        // Apply the genre filter if a genre is provided
+        if ($genre) {
+            $moviesQuery->where('genre_code', $genre);
         }
 
-        $filterByTitle =  Movie::take(10)->get();
-        $filterByYear = $request->query('year','2024');
-        $filterBySemester = $request->input('semester') ?? 1;
-        // Retrieve all movies
-        $movies = Movie::all();
+        // Apply the search filter if a search string is provided
+        if ($search) {
+            $moviesQuery->where(function ($query) use ($search) {
+                $query->where('title', 'like', '%' . $search . '%')
+                      ->orWhere('synopsis', 'like', '%' . $search . '%');
+            });
+        }
 
-        // Pass the movies to the view
-        return view('movies.index', compact('movies'));
+        // Get the movies ordered by year
+        $movies = $moviesQuery->orderBy('year')->paginate(20);
+    
+
+        // Return the view with the movies
+        return view('movies.index')
+            ->with('movies',$movies)
+            ->with('genres',$genres);
     }
 
-    public function show($id)
-    {
-        // Retrieve a single movie by its ID
-        $movie = Movie::findOrFail($id);
-
-        // Pass the movie to the view
-        return view('movies.show', compact('movie'));
-    }
 }

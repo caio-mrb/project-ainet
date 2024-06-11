@@ -42,7 +42,8 @@ class AdministrativeController extends \Illuminate\Routing\Controller
 
     public function show(User $administrative): View
     {
-        return view('administratives.show')->with('administrative', $administrative);
+        return view('administratives.show')
+            ->with('administrative', $administrative);
     }
 
     public function create(): View
@@ -85,6 +86,8 @@ class AdministrativeController extends \Illuminate\Routing\Controller
 
     public function edit(User $administrative): View
     {
+        $this->authorize('update', $administrative);
+
         return view('administratives.edit')
             ->with('administrative', $administrative);
     }

@@ -1,7 +1,5 @@
 @extends('layouts.main')
 
-@section('header-title', 'Shopping Cart')
-
 @section('main')
     <div class="flex justify-center">
         <div class="my-4 p-6 bg-white dark:bg-gray-900 overflow-hidden
@@ -10,7 +8,7 @@
                 <h3 class="text-xl w-96 text-center">Cart is Empty</h3>
             @else
             <div class="font-base text-sm text-gray-700 dark:text-gray-300">
-                <x-disciplines.table :disciplines="$cart"
+                <x-movies.table :disciplines="$cart"
                     :showView="false"
                     :showEdit="false"
                     :showDelete="false"

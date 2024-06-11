@@ -14,7 +14,13 @@ class Genre extends Model
         'name',
     ];     
 
+    public $timestamps = false;
+
     protected $primaryKey = 'code';
+
+    public $incrementing = false;
+
+    protected $keyType = 'string';
 
     public function movies(): HasMany
     {

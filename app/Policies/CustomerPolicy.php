@@ -14,9 +14,7 @@ class CustomerPolicy
     {
         if ($user?->type === 'A')
             return true;
-        
-        // When "Before" returns null, other methods (eg. viewAny, view, etc...) will be
-        // used to check the user authorizaiton
+    
         return null;
     }
     /**
