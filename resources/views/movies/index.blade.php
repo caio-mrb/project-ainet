@@ -28,7 +28,6 @@
         </div>
     </form>
 </div>
-
-    <x-movies.table :movies="$movies" :showView="true" :showEdit="true" :showDelete="true"/>
+        <x-movies.table class='w-full flex justify-center' :movies="$movies" :showView="true" :showEdit="true" :showDelete="true"/>
 @endsection
 

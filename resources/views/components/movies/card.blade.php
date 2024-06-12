@@ -12,10 +12,12 @@
     </div>
     <div class="flex flex-col">
         <h2>{{ $movie->title }}</h2>
-        <p><strong>Genre Code:</strong> {{ $movie->genres->name }}</p>
-        <p><strong>Year:</strong> {{ $movie->year }}</p>
-        <p><strong>Synopsis:</strong> {{ $movie->synopsis }}</p>
-        <p><strong>Trailer:</strong> <a href="{{ $movie->trailer_url }}">{{ $movie->trailer_url }}</a></p>
+        <p><strong>Gênero:</strong> {{ $movie->genres->name }}</p>
+        <p><strong>Ano:</strong> {{ $movie->year }}</p>
+        <p><strong>Sinopse:</strong> {{ $movie->synopsis }}</p>
+        <p><strong>Trailer:</strong></p>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/{{substr(parse_url($movie->trailer_url, PHP_URL_QUERY), 2)}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <p><strong>Sessões:</strong></p>
         <div>
             @foreach($movie->screenings->groupBy('theater_id') as $screeningsByTheater)
                 <div class="w-full bg-primary-red text-gray-200 font-bold">

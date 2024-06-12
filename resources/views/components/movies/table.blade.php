@@ -24,7 +24,7 @@
             <tr class="border-b border-b-gray-400 dark:border-b-gray-500">
                 <td class="px-2 py-2 text-left hidden lg:table-cell">{{ $movie->id }}</td>
                 <td class="px-2 py-2 text-left">{{ $movie->title }}</td>
-                <td class="px-2 py-2 text-left">{{ $movie->genre_code }}</td>
+                <td class="px-2 py-2 text-left">{{ $movie->genres->name }}</td>
                 <td class="px-2 py-2 text-right hidden sm:table-cell">{{ $movie->year }}</td>
                 <td class="px-2 py-2 text-right hidden sm:table-cell"><x-button element="a" type="light" text="Ver mais" class="uppercase ms-4"
                     href="{{ route('movies.show', ['movie' => $movie]) }}"/></td>  
