@@ -3,21 +3,13 @@
         <div class="flex justify-between space-x-3">
             <div class="grow flex flex-col space-y-2">
                 <div>
-                    <x-field.select name="course" label="Course"
-                        value="{{ $course }}"
-                        :options="$listCourses"/>
-                </div>
-                <div class="flex space-x-3">
-                    <x-field.select name="year" label="Year"
-                        value="{{ $year }}"
-                        :options="$listYears"/>
-                    <x-field.select name="semester" label="Semester"
-                        value="{{ $semester }}"
-                        :options="$listSemesters"/>
+                    <x-field.select name="genre" label="Genre"
+                        value="{{ $genre}}"
+                        :options="$genres"/>
                 </div>
                 <div>
-                    <x-field.input name="teacher" label="Teacher" class="grow"
-                        value="{{ $teacher }}"/>
+                    <x-field.input name="name" label="Name" class="grow"
+                        value="{{ $name }}"/>
                 </div>
             </div>
             <div class="grow-0 flex flex-col space-y-3 justify-start">

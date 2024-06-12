@@ -23,7 +23,7 @@ class Button extends Component
             $this->element = 'a';
         }
         $this->type = strtolower($type);
-        if (!in_array($this->type, ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark', 'link'], true)) {
+        if (!in_array($this->type, ['rounded-primary','primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark', 'link'], true)) {
             $this->type = 'dark';
         }
         $this->buttonName = trim($buttonName);
