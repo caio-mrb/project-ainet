@@ -16,7 +16,11 @@
         <p><strong>Ano:</strong> {{ $movie->year }}</p>
         <p><strong>Sinopse:</strong> {{ $movie->synopsis }}</p>
         <p><strong>Trailer:</strong></p>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/{{substr(parse_url($movie->trailer_url, PHP_URL_QUERY), 2)}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        @if($movie->trailer_url)
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/{{(strpos($movie->trailer_url, '&') !== false ? explode('=', explode('&', $movie->trailer_url)[0])[1] : explode('=', $movie->trailer_url)[1])}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        @else
+            <p>Trailer indisponível</p>
+        @endif
         <p><strong>Sessões:</strong></p>
         <div>
             @foreach($movie->screenings->groupBy('theater_id') as $screeningsByTheater)
