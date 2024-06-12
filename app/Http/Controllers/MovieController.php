@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Movie;
 use App\Models\Genre;
+
 use App\Models\Screening;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -29,10 +31,10 @@ class MovieController extends Controller
 
     public function index(Request $request, Collection $genres)
     {        
-        $date = "2022-01-02";
+        $dataAtual = date("Y-m-d");
 
-        $moviesQuery = Movie::whereHas('screenings', function ($query) use ($date) {
-            $query->whereDate('date', $date);
+        $moviesQuery = Movie::whereHas('screenings', function ($query) use ($dataAtual) {
+            $query->whereDate('date', $dataAtual);
         })->orderBy('year');
         
         $movies = $moviesQuery
@@ -81,5 +83,4 @@ class MovieController extends Controller
             ->with('movies',$movies)
             ->with('genres',$genres);
     }
-
 }
