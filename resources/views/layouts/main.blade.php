@@ -112,7 +112,7 @@
                                 selectable="0"
                                 :href="match(Auth::user()->type) {
                                     'A' => route('administratives.edit', ['administrative' => Auth::user()]),
-                                    'E' => route('employees.edit', ['employee' => Auth::user()->employee]),
+                                    'E' => route('employees.edit', ['employee' => Auth::user()]),
                                     'C' => route('customers.edit', ['customer' => Auth::user()->customer]),
                                 }"/>
                             <x-menus.submenu-item
