@@ -36,7 +36,7 @@ class CartController extends Controller
         }
 
         foreach ($trueSeats as $seatId) {
-            if ($cart->contains($seatId)) {
+            if ($cart?->contains($seatId)) {
                 $alertType = 'warning';
                 $url = route('home');
                 $htmlMessage = "Seat <a href='$url'>#{$seatId}</a> <strong>\"{$seatId}\"</strong> was not added to the cart because it is already there!";
@@ -44,7 +44,7 @@ class CartController extends Controller
                     ->with('alert-msg', $htmlMessage)
                     ->with('alert-type', $alertType);
             } else {
-                $cart->push($seatId);
+                $cart?->push($seatId);
             }
          }
 
