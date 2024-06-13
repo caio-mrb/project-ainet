@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\ScreeningController;
 use App\Http\Controllers\AdministrativeController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CustomerController;
@@ -31,6 +32,10 @@ Route::get('/movies/{movie}', [MovieController::class, 'show'])
 
 Route::get('movies/', [MovieController::class, 'index'])
     ->name('movies.index');
+
+
+Route::get('screening/{screening}', [ScreeningController::class, 'index'])
+    ->name('screening.index');
 
 Route::get('courses/{course}/curriculum', [CourseController::class, 'showCurriculum'])
     ->name('courses.curriculum')
