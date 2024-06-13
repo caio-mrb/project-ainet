@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Ticket;
 use App\Models\Student;
 use App\Models\Screening;
+use App\Models\Seat;
 
 class CartController extends Controller
 {
@@ -21,37 +22,32 @@ class CartController extends Controller
 
     public function addToCart(Request $request): RedirectResponse
     {
-        $selectedSeats = $request->input('seats', []);
-        
-        $screening = Screening::find($request->input('screening_id'));
-        
-        $cart = session('cart', collect());
-        
-        $trueSeats = [];
 
-        foreach ($selectedSeats as $seatId => $value) {
-            if (filter_var($value, FILTER_VALIDATE_BOOLEAN)) {
-                $trueSeats[] = $seatId;
-            }
+    $screening = Screening::find($request->input('screening_id'));
+
+    if (!$screening) {
+        return back()->with('alert-msg', 'Screening not found')->with('alert-type', 'error');
+    }
+
+    $selectedSeats = $request->input('seats', []);
+    foreach ($selectedSeats as $seatId => $value) {
+        $seat = Seat::find($seatId);
+        if ($seat && filter_var($value, FILTER_VALIDATE_BOOLEAN)) {
+            // Prepare the cart item with seat and screening
+            $cartItem = [
+                'seat' => $seat,
+                'screening' => $screening
+            ];
+
+            // Add to session cart
+            $cart = session('cart', collect());
+            $cart->push($cartItem);
+            $request->session()->put('cart', $cart);
         }
-
-        foreach ($trueSeats as $seatId) {
-            if ($cart->contains($seatId)) {
-                $alertType = 'warning';
-                $url = route('home');
-                $htmlMessage = "Seat <a href='$url'>#{$seatId}</a> <strong>\"{$seatId}\"</strong> was not added to the cart because it is already there!";
-                return back()
-                    ->with('alert-msg', $htmlMessage)
-                    ->with('alert-type', $alertType);
-            } else {
-                $cart->push($seatId);
-            }
-         }
-
-    $request->session()->put('cart', $cart);
+    }
 
     $alertType = 'success';
-    $htmlMessage = "Os assentos selecionados foram adicionados ao carrinho.";
+    $htmlMessage = "Selected seats have been added to the cart.";
     return back()
         ->with('alert-msg', $htmlMessage)
         ->with('alert-type', $alertType);

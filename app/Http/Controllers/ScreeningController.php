@@ -14,15 +14,18 @@ class ScreeningController extends Controller
     {    
         $seats = Seat::where('theater_id', $screening->theater_id)->get();
 
-        $cart = session('cart', null);
+        $cart = session('cart', collect());
 
         $seatAvailability = [];
         
         foreach ($seats as $seat) {
-            if ($cart?->contains($seat->id)) {
+            $isInCart = $cart->contains(function ($item) use ($seat) {
+                return $item['seat']['id'] === $seat->id;
+            });
+
+            if ($isInCart) {
                 $isFree = false;
             } else {
-                // Check if there's a ticket for the seat
                 $ticket = Ticket::where('screening_id', $screening->id)
                                 ->where('seat_id', $seat->id)
                                 ->first();
