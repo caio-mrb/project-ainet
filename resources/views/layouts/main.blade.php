@@ -49,37 +49,19 @@
                             Gate::check('viewAny', App\Models\Course::class)
                             )
                         <!-- Menu Item: Others -->
+                        @can('edit-settings', App\Models\User::class)
                         <x-menus.submenu
                             selectable="0"
                             uniqueName="submenu_others"
                             content="More">
-                                @can('viewAny', App\Models\Student::class)
-                                <x-menus.submenu-item
-                                    content="Students"
-                                    selectable="0"
-                                    href="{{ route('students.index') }}" />
-                                @endcan
-                                @can('viewAny', App\Models\User::class)
                                 <x-menus.submenu-item
                                     content="Administratives"
                                     selectable="0"
                                     href="{{ route('administratives.index') }}" />
-                                @endcan
                                 <hr>
-                                @can('viewAny', App\Models\Department::class)
-                                <x-menus.submenu-item
-                                    content="Departments"
-                                    selectable="0"
-                                    href="{{ route('departments.index') }}"/>
-                                @endcan
-                                @can('viewAny', App\Models\Course::class)
-                                <x-menus.submenu-item
-                                    content="Course Management"
-                                    href="{{ route('courses.index') }}"/>
-                                @endcan
+                            @endcan
                         </x-menus.submenu>
                         @endif
-
                         <div class="grow"></div>
 
                         <!-- Menu Item: Cart -->

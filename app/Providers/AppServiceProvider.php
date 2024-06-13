@@ -7,9 +7,19 @@ use App\Policies\AdministrativePolicy;
 use Illuminate\Support\Facades\Gate;
 use App\Models\Movie;
 use App\Models\User;
+use App\Policies\UserPolicy;
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider;
+
 
 class AppServiceProvider extends ServiceProvider
 {
+
+
+    protected $policies = [
+        User::class => UserPolicy::class,
+    ];
+
+
     /**
      * Register any application services.
      */
@@ -22,7 +32,9 @@ class AppServiceProvider extends ServiceProvider
      * Bootstrap any application services.
      */
     public function boot(): void
-    {
+    { 
+        Gate::policy(User::class, UserPolicy::class);
+
         Gate::policy(User::class, AdministrativePolicy::class);
 
         Gate::define('use-cart', function (?User $user) {
@@ -33,10 +45,9 @@ class AppServiceProvider extends ServiceProvider
             return true;
         });
 
-        // Gate::define('admin', function (User $user) {
-        //     // Only "administrator" users can "admin"
-        //     return $user->admin;
-        // });
+        Gate::define('edit-settings', function ($user) {
+            return $user->isAdmin();
+        });
 
     }
 }
