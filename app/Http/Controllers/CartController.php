@@ -46,7 +46,7 @@ class CartController extends Controller
             } else {
                 $cart?->push($seatId);
             }
-    }
+         }
 
     $request->session()->put('cart', $cart);
 
