@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use App\Models\Ticket;
 use App\Models\Student;
+use App\Models\Screening;
 
 class CartController extends Controller
 {
@@ -21,53 +22,39 @@ class CartController extends Controller
     public function addToCart(Request $request, Ticket $ticket): RedirectResponse
     {
         $selectedSeats = $request->input('seats', []);
+        
         $screening = Screening::find($request->input('screening_id'));
-
+        
+        $cart = session('cart', null);
+        
+        $trueSeats = [];
 
         foreach ($selectedSeats as $seatId => $value) {
-            if (!$cart) {
-                $cart = collect([$discipline]);
-                $request->session()->put('cart', $cart);
-            } else {
-                if ($cart->firstWhere('id', $discipline->id)) {
-                    $alertType = 'warning';
-                    $url = route('disciplines.show', ['discipline' => $discipline]);
-                    $htmlMessage = "Discipline <a href='$url'>#{$discipline->id}</a>
-                    <strong>\"{$discipline->name}\"</strong> was not added to the cart because it is already there!";
-                    return back()
-                        ->with('alert-msg', $htmlMessage)
-                        ->with('alert-type', $alertType);
-                } else {
-                    $cart->push($discipline);
-                }
-            }
-            $alertType = 'success';
-            $url = route('disciplines.show', ['discipline' => $discipline]);
-            $htmlMessage = "Discipline <a href='$url'>#{$discipline->id}</a>
-                    <strong>\"{$discipline->name}\"</strong> was added to the cart.";
-
-
-            $seat = Seat::find($seatId);
-            if ($seat) {
-                $ticket = Ticket::where('seat_id', $seat->id)->first();
-                if (!$ticket) {
-                    $newTicket = new Ticket();
-                    $newTicket->seat_id = $seat->id;
-                    $newTicket->screening_id = $request->input('screening_id');
-                    $newTicket->save();
-                    
-                    $cart = session('cart', collect());
-                    $cart->push($newTicket);
-                    $request->session()->put('cart', $cart);
-                }
+            if (filter_var($value, FILTER_VALIDATE_BOOLEAN)) {
+                $trueSeats[] = $seatId;
             }
         }
-    
-        $alertType = 'success';
-        $htmlMessage = "Selected seats have been added to the cart.";
-        return back()
-            ->with('alert-msg', $htmlMessage)
-            ->with('alert-type', $alertType);
+
+        foreach ($trueSeats as $seatId) {
+            if ($cart->contains($seatId)) {
+                $alertType = 'warning';
+                $url = route('home');
+                $htmlMessage = "Seat <a href='$url'>#{$seatId}</a> <strong>\"{$seatId}\"</strong> was not added to the cart because it is already there!";
+                return back()
+                    ->with('alert-msg', $htmlMessage)
+                    ->with('alert-type', $alertType);
+            } else {
+                $cart->push($seatId);
+            }
+    }
+
+    $request->session()->put('cart', $cart);
+
+    $alertType = 'success';
+    $htmlMessage = "Os assentos selecionados foram adicionados ao carrinho.";
+    return back()
+        ->with('alert-msg', $htmlMessage)
+        ->with('alert-type', $alertType);
     }
 
     public function removeFromCart(Request $request, Discipline $discipline): RedirectResponse

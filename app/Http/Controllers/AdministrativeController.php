@@ -32,7 +32,7 @@ class AdministrativeController extends \Illuminate\Routing\Controller
         $administratives = $administrativesQuery
             ->paginate(20)
             ->withQueryString();
-
+            
         return view(
             'administratives.index',
             compact('administratives', 'filterByName')
