@@ -44,7 +44,7 @@ class CartController extends Controller
                     ->with('alert-msg', $htmlMessage)
                     ->with('alert-type', $alertType);
             } else {
-                $cart->push($seatId);
+                $cart?->push($seatId);
             }
     }
 
