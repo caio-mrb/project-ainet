@@ -62,4 +62,10 @@ class User extends Authenticatable
             return asset("storage/photos/anonymous.png");
         }
     }
+
+    public function isAdmin()
+    {
+        // Supondo que você tenha uma coluna 'role' no banco de dados
+        return $this->type === 'A';
+    }
 }
