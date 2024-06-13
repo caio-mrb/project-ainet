@@ -1,9 +1,9 @@
 @extends('layouts.main')
 
 @section('main')
-    <form action="#" class="flex overflow-x-auto  flex-col space-y-2">
+    <form action="{{ route('cart.add', ['screening' => $screening]) }}" method="POST" class="flex overflow-x-auto  flex-col space-y-2">
         @csrf
-        <input type="hidden" name="screening_id" value="{{ $screening->id }}">
+        <input type="hidden" name="screening_id" value="{{ json_encode($screening->id) }}">
         @foreach(collect($seatAvailability)->groupBy('seat.row') as $row => $seatsInRow)
         <div class="flex flex-row items-center">
         <div class="flex h-full">

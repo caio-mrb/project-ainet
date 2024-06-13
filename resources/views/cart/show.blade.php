@@ -8,13 +8,6 @@
                 <h3 class="text-xl w-96 text-center">Cart is Empty</h3>
             @else
             <div class="font-base text-sm text-gray-700 dark:text-gray-300">
-                <x-movies.table :disciplines="$cart"
-                    :showView="false"
-                    :showEdit="false"
-                    :showDelete="false"
-                    :showAddCart="false"
-                    :showRemoveFromCart="true"
-                    />
             </div>
             <div class="mt-12">
                 <div class="flex justify-between space-x-12 items-end">

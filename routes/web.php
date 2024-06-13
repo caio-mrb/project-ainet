@@ -133,7 +133,7 @@ Route::middleware('auth', 'verified')->group(function () {
 // Use Cart routes should be accessible to the public */
 
     // Add a discipline to the cart:
-    Route::post('cart/{discipline}', [CartController::class, 'addToCart'])
+    Route::post('cart/{screening}', [CartController::class, 'addToCart'])
         ->name('cart.add');
     // Remove a discipline from the cart:
     Route::delete('cart/{discipline}', [CartController::class, 'removeFromCart'])
