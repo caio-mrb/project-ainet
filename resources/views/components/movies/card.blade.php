@@ -37,7 +37,7 @@
 
                             @foreach($screeningsByDate as $screening)
                                 <x-button class="self-center ms-2" type="rounded-primary" text="{{ \Carbon\Carbon::parse($screening->start_time)->format('H:i') }}" 
-                                    href="{{ url()->full() }}"/>
+                                    href="{{ route('screening.index', ['screening' => $screening]) }}"/>
                             @endforeach
                         </div>
                         <hr>
