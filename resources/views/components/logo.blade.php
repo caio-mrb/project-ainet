@@ -5,7 +5,7 @@
         @if ($showText)
             <div class="flex flex-col items-center">
             <p style="color:{{$color}}" class="uppercase text-s m-0 font-bold">cinemagic</p>
-            <p style="color:{{$color}}" class="lowercase text-xs m-0">cinema espell</p>
+            <p style="color:{{$color}}" class="lowercase text-xs m-0">cinema spell</p>
             </div>
         @endif
 </div>

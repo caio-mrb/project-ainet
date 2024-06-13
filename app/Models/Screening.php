@@ -23,6 +23,11 @@ class Screening extends Model
         return $this->belongsTo(Theater::class);
     }
 
+    public function movie(): BelongsTo
+    {
+        return $this->belongsTo(Movie::class);
+    }
+
     public function tickets(): HasMany
     {
         return $this->hasMany(Ticket::class);

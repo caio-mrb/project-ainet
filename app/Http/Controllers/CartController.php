@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
-use App\Models\Discipline;
+use App\Models\Ticket;
 use App\Models\Student;
 
 class CartController extends Controller
@@ -18,29 +18,53 @@ class CartController extends Controller
         return view('cart.show', compact('cart'));
     }
 
-    public function addToCart(Request $request, Discipline $discipline): RedirectResponse
+    public function addToCart(Request $request, Ticket $ticket): RedirectResponse
     {
-        $cart = session('cart', null);
-        if (!$cart) {
-            $cart = collect([$discipline]);
-            $request->session()->put('cart', $cart);
-        } else {
-            if ($cart->firstWhere('id', $discipline->id)) {
-                $alertType = 'warning';
-                $url = route('disciplines.show', ['discipline' => $discipline]);
-                $htmlMessage = "Discipline <a href='$url'>#{$discipline->id}</a>
-                <strong>\"{$discipline->name}\"</strong> was not added to the cart because it is already there!";
-                return back()
-                    ->with('alert-msg', $htmlMessage)
-                    ->with('alert-type', $alertType);
+        $selectedSeats = $request->input('seats', []);
+        $screening = Screening::find($request->input('screening_id'));
+
+
+        foreach ($selectedSeats as $seatId => $value) {
+            if (!$cart) {
+                $cart = collect([$discipline]);
+                $request->session()->put('cart', $cart);
             } else {
-                $cart->push($discipline);
+                if ($cart->firstWhere('id', $discipline->id)) {
+                    $alertType = 'warning';
+                    $url = route('disciplines.show', ['discipline' => $discipline]);
+                    $htmlMessage = "Discipline <a href='$url'>#{$discipline->id}</a>
+                    <strong>\"{$discipline->name}\"</strong> was not added to the cart because it is already there!";
+                    return back()
+                        ->with('alert-msg', $htmlMessage)
+                        ->with('alert-type', $alertType);
+                } else {
+                    $cart->push($discipline);
+                }
+            }
+            $alertType = 'success';
+            $url = route('disciplines.show', ['discipline' => $discipline]);
+            $htmlMessage = "Discipline <a href='$url'>#{$discipline->id}</a>
+                    <strong>\"{$discipline->name}\"</strong> was added to the cart.";
+
+
+            $seat = Seat::find($seatId);
+            if ($seat) {
+                $ticket = Ticket::where('seat_id', $seat->id)->first();
+                if (!$ticket) {
+                    $newTicket = new Ticket();
+                    $newTicket->seat_id = $seat->id;
+                    $newTicket->screening_id = $request->input('screening_id');
+                    $newTicket->save();
+                    
+                    $cart = session('cart', collect());
+                    $cart->push($newTicket);
+                    $request->session()->put('cart', $cart);
+                }
             }
         }
+    
         $alertType = 'success';
-        $url = route('disciplines.show', ['discipline' => $discipline]);
-        $htmlMessage = "Discipline <a href='$url'>#{$discipline->id}</a>
-                <strong>\"{$discipline->name}\"</strong> was added to the cart.";
+        $htmlMessage = "Selected seats have been added to the cart.";
         return back()
             ->with('alert-msg', $htmlMessage)
             ->with('alert-type', $alertType);

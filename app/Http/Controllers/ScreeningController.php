@@ -30,6 +30,7 @@ class ScreeningController extends Controller
         }
         
         return view('screenings.index')
-            ->with('seatAvailability',$seatAvailability);
+            ->with('seatAvailability',$seatAvailability)
+            ->with('screening',$screening);
     }  
 }

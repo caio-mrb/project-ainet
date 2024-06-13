@@ -1,6 +1,6 @@
 <div x-data="{ isToggled: false, isFree: {{json_encode($seatInfo['isFree'])}} }" class="w-min h-min">
-    <input class="sr-only" name="{{$seatInfo['seat']}}" x-bind:value="isToggled">
-    <div @click="isToggled = !isToggled" class="w-20">
+    <input class="sr-only" name="seats[{{ $seatInfo['seat']->id }}]" x-bind:value="isToggled">
+    <div @click="isToggled = !isToggled" class="w-10">
         <svg 
         :class="isFree ? 'cursor-pointer' : ''"
         class="w-auto"
