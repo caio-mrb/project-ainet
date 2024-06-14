@@ -13,7 +13,6 @@
         </thead>
         <tbody>
                 {{ $totalPrice = 0 }}
-                {{var_dump(Auth::check())}}
         @foreach ($cart as $cartItem)
             @foreach ($configuration as $config)
                      {{ $ticketPrice = (Auth::check() ? number_format((float) $config->ticket_price - (float) $config->registered_customer_ticket_discount, 2) : $config->ticket_price) }}
