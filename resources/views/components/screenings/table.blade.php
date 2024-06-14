@@ -12,22 +12,35 @@
         </tr>
         </thead>
         <tbody>
+            @php
+                $totalPrice = 0;
+            @endphp
         @foreach ($cart as $cartItem)
-            
+            @foreach ($configuration as $config)
+                @php
+                     $totalPrice += $config->ticket_price;
+                @endphp
             <tr class="border-b border-b-gray-400 dark:border-b-gray-500">
                 <td class="px-2 py-2 text-left hidden sm:table-cell">{{ $cartItem['screening']->theater->name }}</td>
                 <td class="px-2 py-2 text-left">{{ $cartItem['screening']->movie->title }}</td>
                 <td class="px-2 py-2 text-left">{{ \Carbon\Carbon::parse($cartItem['screening']['date'])->format('d/m/y')}}</td>
                 <td class="px-2 py-2 text-center">{{ \Carbon\Carbon::parse($cartItem['screening']['start_time'])->format('H:i') }}</td>
                 <td class="px-2 py-2 text-center">{{ $cartItem['seat']['row'] }} - {{ $cartItem['seat']['seat_number'] }}</td>
-                <td class="px-2 py-2 text-left">{{ $configuration }}</td>
+                <td class="px-2 py-2 text-left">{{ Auth::check() ? number_format($config->ticket_price-$config->registed_customer_ticket_discount,2) : $config->ticket_price }}</td>
                 <td>
                     <x-table.icon-minus class="px-0.5"
                         method="delete"
                         action="{{ route('cart.remove', ['screening' => $cartItem['screening'], 'seat' => $cartItem['seat']]) }}"/>
                 </td>
             </tr>
+            @endforeach
         @endforeach
         </tbody>
+        <tfoot>
+            <tr class="border-b border-b-gray-400 dark:border-b-gray-500">
+                <td colspan="5" class="text-right font-bold">Total: </td>
+                <td class="text-left font-bold">{{  " €" . number_format($totalPrice,2) }}</td>
+            </tr>
+        </tfoot>
     </table>
 </div>

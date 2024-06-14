@@ -17,7 +17,7 @@ class CartController extends Controller
 {
     public function show(): View
     {
-        $configuration = collect(Configuration::all());
+        $configuration = Configuration::all();
 
         $cart = session('cart', null);
         return view('cart.show')
@@ -45,7 +45,7 @@ class CartController extends Controller
             ]);
 
             $cart = session('cart', collect());
-            $cart->push($cartItem);
+            $cart->push('cartItem',$cartItem);
             $request->session()->put('cart', $cart);
         }
     }
