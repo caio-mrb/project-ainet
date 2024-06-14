@@ -123,15 +123,14 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::resource('administratives', AdministrativeController::class);
 
     // Confirm (store) the cart and save disciplines registration on the database:
-    Route::post('cart', [CartController::class, 'confirm'])
-        ->name('cart.confirm')
-        ->can('confirm-cart');
+
 });
 
 /* ----- OTHER PUBLIC ROUTES ----- */
 
 // Use Cart routes should be accessible to the public */
-
+    Route::post('cart', [CartController::class, 'confirm'])
+        ->name('cart.confirm');
     // Add a discipline to the cart:
     Route::post('cart/{screening}', [CartController::class, 'addToCart'])
         ->name('cart.add');
