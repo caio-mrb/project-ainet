@@ -31,9 +31,7 @@
     <label class="block font-medium text-sm text-gray-700 dark:text-gray-300" for="id_{{ $name }}">
         {{ $label }}
     </label>
-    <input id="id" name="name" type="text"
-        @if($readonly) readonly @endif 
-               value="{{ $readonly ? Auth::user()->name : '' }}">
+    <input id="id_{{ $name }}" name="{{ $name }}" type="{{ $type }}" value="{{ $value }}"
         class="appearance-none block
             mt-1 w-full
             bg-white dark:bg-gray-900

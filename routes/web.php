@@ -12,6 +12,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\PurchaseController;
 use App\Models\Discipline;
 use App\Models\Teacher;
 use App\Models\Student;
@@ -129,6 +130,8 @@ Route::middleware('auth', 'verified')->group(function () {
 /* ----- OTHER PUBLIC ROUTES ----- */
 
 // Use Cart routes should be accessible to the public */
+    Route::post('purchase',[PurchaseController::class,'store'])
+        ->name('purchase.store');
     Route::post('cart', [CartController::class, 'confirm'])
         ->name('cart.confirm');
     // Add a discipline to the cart:

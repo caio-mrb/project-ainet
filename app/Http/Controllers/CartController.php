@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Ticket;
 use App\Models\Student;
 use App\Models\Screening;
+use App\Models\Purchase;
 use App\Models\Seat;
 use App\Models\Configuration;
 
@@ -109,7 +110,10 @@ class CartController extends Controller
                 ->with('alert-type', 'danger')
                 ->with('alert-msg', "Cart was not confirmed, because cart is empty!");
         }
-        $readonly = Auth::check();
-        return view('purchase.create',compact('readonly'));
+        if(Auth::check()){
+            $user = Auth::user();
+            return view('purchase.create')->with('user', $user); 
+        }
+        return view('purchase.create')->with('user', null);
     }
 }

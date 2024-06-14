@@ -13,13 +13,17 @@
                         Click on "Save" button to store the information.
                     </p>
                 </header>
-                <form method="POST" action="{{  }}">
+                <form method="POST" action="{{ route('purchase.store') }}">
                     @csrf
                     <div class="mt-6 space-y-4">
-                        @include('purchase.shared.fields', ['mode' => 'create'])
-                    </div>
+                        @if (Auth::check())
+                            @include('purchase.shared.fields', ['mode' => 'show'])
+                        @else
+                            @include('purchase.shared.fields', ['mode' => 'create'])
+                        @endif
+                        </div>
                     <div class="flex mt-6">
-                        <x-button element="submit" type="dark" text="Save new course" class="uppercase" />
+                        <x-button element="submit" type="dark" text="Save purchase" class="uppercase" />
                     </div>
                 </form>
             </section>
