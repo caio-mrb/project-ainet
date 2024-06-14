@@ -18,7 +18,6 @@
             <x-text-input id="name" class="block mt-1 w-full" type="text" name="search" value="{{$request->query('search') ?? '' }}" />
         </div>
     
-    
         <div class="flex items-center justify-end mt-4">    
             <x-button element="a" type="light" text="Cancel" :href="route('home')"/>
             <x-button
@@ -28,6 +27,6 @@
         </div>
     </form>
 </div>
-        <x-movies.table class='w-full flex justify-center' :movies="$movies" :showView="true" :showEdit="true" :showDelete="true"/>
+        <x-movies.table class='w-full flex justify-center mt-4' :movies="$movies" :showView="true" :showEdit="true" :showDelete="true"/>
 @endsection
 

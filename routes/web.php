@@ -136,10 +136,11 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::post('cart/{screening}', [CartController::class, 'addToCart'])
         ->name('cart.add');
     // Remove a discipline from the cart:
-    Route::delete('cart/{discipline}', [CartController::class, 'removeFromCart'])
+    Route::delete('cart/{screening}/{seat}', [CartController::class, 'removeFromCart'])
         ->name('cart.remove');
     // Show the cart:
-    Route::get('cart', [CartController::class, 'show'])->name('cart.show');
+    Route::get('cart', [CartController::class, 'show'])
+        ->name('cart.show');
     // Clear the cart:
     Route::delete('cart', [CartController::class, 'destroy'])->name('cart.destroy');
 

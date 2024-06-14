@@ -169,7 +169,7 @@
         -->
 
         <main>
-            <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+            <div class="max-w-7xl bg-white h-auto mx-auto py-6 sm:px-6 lg:px-8">
                 @if (session('alert-msg'))
                     <x-alert type="{{ session('alert-type') ?? 'info' }}">
                         {!! session('alert-msg') !!}

@@ -11,13 +11,18 @@ use App\Models\Ticket;
 use App\Models\Student;
 use App\Models\Screening;
 use App\Models\Seat;
+use App\Models\Configuration;
 
 class CartController extends Controller
 {
     public function show(): View
     {
+        $configuration = Configuration::first();
+
         $cart = session('cart', null);
-        return view('cart.show', compact('cart'));
+        return view('cart.show')
+            ->with('cart',$cart)
+            ->with('configuration',$configuration);
     }
 
     public function addToCart(Request $request): RedirectResponse
@@ -33,13 +38,12 @@ class CartController extends Controller
     foreach ($selectedSeats as $seatId => $value) {
         $seat = Seat::find($seatId);
         if ($seat && filter_var($value, FILTER_VALIDATE_BOOLEAN)) {
-            // Prepare the cart item with seat and screening
-            $cartItem = [
+
+            $cartItem = collect([
                 'seat' => $seat,
                 'screening' => $screening
-            ];
+            ]);
 
-            // Add to session cart
             $cart = session('cart', collect());
             $cart->push($cartItem);
             $request->session()->put('cart', $cart);
@@ -47,40 +51,38 @@ class CartController extends Controller
     }
 
     $alertType = 'success';
-    $htmlMessage = "Selected seats have been added to the cart.";
+    $htmlMessage = "Os assentos selecionados foram adicionados com sucesso.";
     return back()
         ->with('alert-msg', $htmlMessage)
         ->with('alert-type', $alertType);
     }
 
-    public function removeFromCart(Request $request, Discipline $discipline): RedirectResponse
+    public function removeFromCart(Request $request, Screening $screening, Seat $seat): RedirectResponse
     {
-        $url = route('disciplines.show', ['discipline' => $discipline]);
         $cart = session('cart', null);
         if (!$cart) {
             $alertType = 'warning';
-            $htmlMessage = "Discipline <a href='$url'>#{$discipline->id}</a>
-                <strong>\"{$discipline->name}\"</strong> was not removed from the cart because cart is empty!";
+            $htmlMessage = "Assento <strong>\"{$seat->row} - {$seat->seat_number}\"</strong> da sessão <strong>\"{$screening->movie->title} - {$screening->date} {$screening->start_time}\"</strong> não foi removido do carrinho pois o carrinho está vazio!";
             return back()
                 ->with('alert-msg', $htmlMessage)
                 ->with('alert-type', $alertType);
         } else {
-            $element = $cart->firstWhere('id', $discipline->id);
+            $element = $cart->where('seat.id', $seat->id)
+                            ->where('screening.id', $screening->id)
+                            ->first();
             if ($element) {
                 $cart->forget($cart->search($element));
                 if ($cart->count() == 0) {
                     $request->session()->forget('cart');
                 }
                 $alertType = 'success';
-                $htmlMessage = "Discipline <a href='$url'>#{$discipline->id}</a>
-                <strong>\"{$discipline->name}\"</strong> was removed from the cart.";
+                $htmlMessage = "Assento <strong>\"{$seat->row} - {$seat->seat_number}\"</strong> da sessão <strong>\"{$screening->movie->title} - {$screening->date} {$screening->start_time}\"</strong> foi removido do carrinho.";
                 return back()
                     ->with('alert-msg', $htmlMessage)
                     ->with('alert-type', $alertType);
             } else {
                 $alertType = 'warning';
-                $htmlMessage = "Discipline <a href='$url'>#{$discipline->id}</a>
-                <strong>\"{$discipline->name}\"</strong> was not removed from the cart because cart does not include it!";
+                $htmlMessage = "Assento <strong>\"{$seat->row} - {$seat->seat_number}\"</strong> da sessão <strong>\"{$screening->movie->title} - {$screening->date} {$screening->start_time}\"</strong> não foi removido pois o carrinho não possuia este assento";
                 return back()
                     ->with('alert-msg', $htmlMessage)
                     ->with('alert-type', $alertType);

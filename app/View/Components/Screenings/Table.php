@@ -1,19 +1,20 @@
 <?php
 
-namespace App\View\Components\Movies;
+namespace App\View\Components\Screenings;
 
 use Closure;
-use App\Models\Movie;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Card extends Component
+class Table extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct(public Movie $movie, public bool $isFull = false)
+    public function __construct(public object $cart, public Collection $configuration)
     {
+        //
     }
 
     /**
@@ -21,6 +22,6 @@ class Card extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.movies.card');
+        return view('components.screenings.table');
     }
 }

@@ -15,6 +15,12 @@
                         hover:bg-secondary-red dark:hover:bg-blue-300
                         focus:bg-secondary-red dark:focus:bg-blue-300
                         active:bg-rose-700 dark:active:bg-blue-200',
+                        
+        'rounded-secondary' => 'text-white dark:text-gray-700 rounded-full
+                        bg-gray-500 dark:bg-gray-400
+                        hover:bg-gray-600 dark:hover:bg-gray-300
+                        focus:bg-gray-600 dark:focus:bg-gray-300
+                        active:bg-gray-700 dark:active:bg-gray-200',
         'primary' => 'text-white dark:text-gray-900 rounded-md
                         bg-blue-600 dark:bg-blue-400
                         hover:bg-blue-700 dark:hover:bg-blue-300
@@ -61,7 +67,7 @@
 @endphp
 <div {{ $attributes }}>
     @if ($element == 'a')
-        <a href="{{ $href }}"
+        <a  href="{{ $href }}"
             class="px-4 py-2 inline-block border border-transparent
                     font-medium text-sm tracking-widest
                     focus:outline-none focus:ring-2

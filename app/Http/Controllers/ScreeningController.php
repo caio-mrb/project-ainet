@@ -8,10 +8,11 @@ use App\Models\Screening;
 use Illuminate\Http\Request;
 
 
+
 class ScreeningController extends Controller
 {
     public function index(Screening $screening)
-    {    
+    {
         $seats = Seat::where('theater_id', $screening->theater_id)->get();
 
         $cart = session('cart', collect());
@@ -19,8 +20,8 @@ class ScreeningController extends Controller
         $seatAvailability = [];
         
         foreach ($seats as $seat) {
-            $isInCart = $cart->contains(function ($item) use ($seat) {
-                return $item['seat']['id'] === $seat->id;
+            $isInCart = $cart->contains(function ($item) use ($seat, $screening) {
+                return $item['seat']['id'] === $seat->id && $item['screening']['id'] === $screening->id;
             });
 
             if ($isInCart) {
