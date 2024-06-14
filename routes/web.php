@@ -139,7 +139,7 @@ Route::middleware('auth', 'verified')->group(function () {
         ->name('cart.remove');
     // Show the cart:
     Route::get('cart', [CartController::class, 'show'])
-        ->name('cart.show');
+    ->name('cart.show');
     // Clear the cart:
     Route::delete('cart', [CartController::class, 'destroy'])->name('cart.destroy');
 
