@@ -21,40 +21,40 @@ class CartController extends Controller
 
         $cart = session('cart', null);
         return view('cart.show')
-            ->with('cart',$cart)
-            ->with('configuration',$configuration);
+            ->with('cart', $cart)
+            ->with('configuration', $configuration);
     }
 
     public function addToCart(Request $request): RedirectResponse
     {
 
-    $screening = Screening::find($request->input('screening_id'));
+        $screening = Screening::find($request->input('screening_id'));
 
-    if (!$screening) {
-        return back()->with('alert-msg', 'Screening not found')->with('alert-type', 'error');
-    }
-
-    $selectedSeats = $request->input('seats', []);
-    foreach ($selectedSeats as $seatId => $value) {
-        $seat = Seat::find($seatId);
-        if ($seat && filter_var($value, FILTER_VALIDATE_BOOLEAN)) {
-
-            $cartItem = collect([
-                'seat' => $seat,
-                'screening' => $screening
-            ]);
-
-            $cart = session('cart', collect());
-            $cart->push('cartItem',$cartItem);
-            $request->session()->put('cart', $cart);
+        if (!$screening) {
+            return back()->with('alert-msg', 'Screening not found')->with('alert-type', 'error');
         }
-    }
 
-    $alertType = 'success';
-    $htmlMessage = "Os assentos selecionados foram adicionados com sucesso.";
-    return back()
-        ->with('alert-msg', $htmlMessage)
-        ->with('alert-type', $alertType);
+        $selectedSeats = $request->input('seats', []);
+        foreach ($selectedSeats as $seatId => $value) {
+            $seat = Seat::find($seatId);
+            if ($seat && filter_var($value, FILTER_VALIDATE_BOOLEAN)) {
+
+                $cartItem = collect([
+                    'seat' => $seat,
+                    'screening' => $screening
+                ]);
+
+                $cart = session('cart', collect());
+                $cart->push($cartItem);
+                $request->session()->put('cart', $cart);
+            }
+        }
+
+        $alertType = 'success';
+        $htmlMessage = "Os assentos selecionados foram adicionados com sucesso.";
+        return back()
+            ->with('alert-msg', $htmlMessage)
+            ->with('alert-type', $alertType);
     }
 
     public function removeFromCart(Request $request, Screening $screening, Seat $seat): RedirectResponse
@@ -68,8 +68,8 @@ class CartController extends Controller
                 ->with('alert-type', $alertType);
         } else {
             $element = $cart->where('seat.id', $seat->id)
-                            ->where('screening.id', $screening->id)
-                            ->first();
+                ->where('screening.id', $screening->id)
+                ->first();
             if ($element) {
                 $cart->forget($cart->search($element));
                 if ($cart->count() == 0) {
@@ -128,17 +128,16 @@ class CartController extends Controller
                     ];
                 }
             }
-            $ignoredStr = match($ignored) {
+            $ignoredStr = match ($ignored) {
                 0 => "",
                 1 => "<br>(1 discipline was ignored because student was already enrolled in it)",
                 default => "<br>($ignored disciplines were ignored because student was already enrolled on them)"
             };
             $totalInserted = count($insertDisciplines);
-            $totalInsertedStr = match($totalInserted) {
+            $totalInsertedStr = match ($totalInserted) {
                 0 => "",
                 1 => "1 discipline registration was added to the student",
                 default => "$totalInserted disciplines registrations were added to the student",
-
             };
             if ($totalInserted == 0) {
                 $request->session()->forget('cart');

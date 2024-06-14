@@ -12,14 +12,11 @@
         </tr>
         </thead>
         <tbody>
-            @php
-                $totalPrice = 0;
-            @endphp
+                {{ $totalPrice = 0 }}
+                {{var_dump(Auth::check())}}
         @foreach ($cart as $cartItem)
             @foreach ($configuration as $config)
-                @php
-                     $totalPrice += $config->ticket_price;
-                @endphp
+                     {{ $totalPrice += $config->ticket_price}}
             <tr class="border-b border-b-gray-400 dark:border-b-gray-500">
                 <td class="px-2 py-2 text-left hidden sm:table-cell">{{ $cartItem['screening']->theater->name }}</td>
                 <td class="px-2 py-2 text-left">{{ $cartItem['screening']->movie->title }}</td>
