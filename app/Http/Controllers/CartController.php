@@ -43,7 +43,7 @@ class CartController extends Controller
                     'seat' => $seat,
                     'screening' => $screening
                 ]);
-
+ 
                 $cart = session('cart', collect());
                 $cart->push($cartItem);
                 $request->session()->put('cart', $cart);
