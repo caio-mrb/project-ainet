@@ -59,8 +59,4 @@
     </div>
     
 </div>
-
-    
 @endsection
-
-<x-movies.card :movie="$movie" :isFull="true"/>
