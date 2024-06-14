@@ -3,7 +3,7 @@
 namespace App\View\Components\Screenings;
 
 use Closure;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 

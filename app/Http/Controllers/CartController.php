@@ -17,7 +17,7 @@ class CartController extends Controller
 {
     public function show(): View
     {
-        $configuration = Configuration::first();
+        $configuration = collect(Configuration::all());
 
         $cart = session('cart', null);
         return view('cart.show')
