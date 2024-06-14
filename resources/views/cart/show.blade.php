@@ -16,9 +16,6 @@
                         <h3 class="mb-4 text-xl">Shopping Cart Confirmation </h3>
                         <form action="{{ route('cart.confirm') }}" method="post">
                             @csrf
-                                <x-field.input name="student_number" label="Student Number" width="lg"
-                                                :readonly="false"
-                                                value="{{ old('student_number', Auth::User()?->student?->number ) }}"/>
                                 <x-button element="submit" type="dark" text="Confirm" class="mt-4"/>
                         </form>
                     </div>

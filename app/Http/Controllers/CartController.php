@@ -107,58 +107,11 @@ class CartController extends Controller
                 ->with('alert-type', 'danger')
                 ->with('alert-msg', "Cart was not confirmed, because cart is empty!");
         } else {
-            $student = Student::where('number', $request->validated()['student_number'])->first();
-            if (!$student) {
-                return back()
-                    ->with('alert-type', 'danger')
-                    ->with('alert-msg', "Student number does not exist on the database!");
-            }
-            $insertDisciplines = [];
-            $disciplinesOfStudent = $student->disciplines;
-            $ignored = 0;
-            foreach ($cart as $discipline) {
-                $exist = $disciplinesOfStudent->where('id', $discipline->id)->count();
-                if ($exist) {
-                    $ignored++;
-                } else {
-                    $insertDisciplines[$discipline->id] = [
-                        "discipline_id" => $discipline->id,
-                        "repeating" => 0,
-                        "grade" => null,
-                    ];
-                }
-            }
-            $ignoredStr = match ($ignored) {
-                0 => "",
-                1 => "<br>(1 discipline was ignored because student was already enrolled in it)",
-                default => "<br>($ignored disciplines were ignored because student was already enrolled on them)"
-            };
-            $totalInserted = count($insertDisciplines);
-            $totalInsertedStr = match ($totalInserted) {
-                0 => "",
-                1 => "1 discipline registration was added to the student",
-                default => "$totalInserted disciplines registrations were added to the student",
-            };
-            if ($totalInserted == 0) {
-                $request->session()->forget('cart');
-                return back()
-                    ->with('alert-type', 'danger')
-                    ->with('alert-msg', "No registration was added to the student!$ignoredStr");
-            } else {
-                DB::transaction(function () use ($student, $insertDisciplines) {
-                    $student->disciplines()->attach($insertDisciplines);
-                });
-                $request->session()->forget('cart');
-                if ($ignored == 0) {
-                    return redirect()->route('students.show', ['student' => $student])
-                        ->with('alert-type', 'success')
-                        ->with('alert-msg', "$totalInsertedStr.");
-                } else {
-                    return redirect()->route('students.show', ['student' => $student])
-                        ->with('alert-type', 'warning')
-                        ->with('alert-msg', "$totalInsertedStr. $ignoredStr");
-                }
-            }
+            $user = Auth::user();
+
+            return view('purchase.crate')
+            ->with('cart', $cart)
+            ->with('user', $user);
         }
     }
 }
