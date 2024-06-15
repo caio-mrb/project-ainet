@@ -2,9 +2,9 @@
 @section('header-title', $movie->title)
 @section('main')
 
-<div class="movie-card flex flex-col md:flex-row">
+<div class="movie-card w-full place-content-center flex flex-col md:flex-row">
     
-    <div class="movie-poster-container w-auto">
+    <div class="flex flex-col w-120 md:w-80 p-4">
         <img src="
         @if($movie->poster_filename)
             {{ asset('storage/posters/' . $movie->poster_filename) }}
@@ -12,27 +12,32 @@
             {{ asset('storage/posters/_no_poster_1.png') }}
         @endif
         " alt="{{ $movie->title }}">
-    </div>
-    <div class="flex flex-col">
-        <p><strong>Gênero:</strong> {{ $movie->genres->name }}</p>
-        <p><strong>Ano:</strong> {{ $movie->year }}</p>
+
+        <p><strong>Título:</strong> {{ $movie->title }}</p>
+
+        <div class="flex flex-row place-content-between w-full">
+            <p><strong>Gênero:</strong> {{ $movie->genres->name }}</p>
+            <p><strong>Ano:</strong> {{ $movie->year }}</p>
+        </div>
+        
         <p><strong>Sinopse:</strong> {{ $movie->synopsis }}</p>
-        <p><strong>Trailer:</strong></p>
+    </div>
+        
+    <div class="flex flex-col w-120 p-4">
         @if($movie->trailer_url)
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/{{(strpos($movie->trailer_url, '&') !== false ? explode('=', explode('&', $movie->trailer_url)[0])[1] : explode('=', $movie->trailer_url)[1])}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <iframe class="rounded-md" width="560" height="315" src="https://www.youtube.com/embed/{{(strpos($movie->trailer_url, '&') !== false ? explode('=', explode('&', $movie->trailer_url)[0])[1] : explode('=', $movie->trailer_url)[1])}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         @else
             <p>Trailer indisponível</p>
         @endif
-        <p><strong>Sessões:</strong></p>
-        <div>
+        <div class="mt-4">
             @foreach($screenings->groupBy('theater_id') as $screeningsByTheater)
-                <div class="w-full bg-primary-red text-gray-200 font-bold">
+                <div class="w-full bg-primary-red text-gray-200 font-bold p-2 rounded-t-md">
                     <p>Cinema: {{ $screeningsByTheater->first()->theater->name }}</p>
                 </div>
-                <div class="flex flex-col overflow-auto h-32">
+                <div class="flex flex-col overflow-auto h-48 rounded-b-md">
                     @foreach($screeningsByTheater->groupBy('date') as $date => $screeningsByDate)
                         <div class="flex flex-row content-center">
-                            <div class="flex flex-col text-center text-gray-200 bg-gray-500 p-2">
+                            <div class="flex flex-col text-center text-gray-200 bg-gray-500 px-2 py-1">
                                 <p class="text-xs">{{ \Carbon\Carbon::parse($date)->format('D') }}</p>
                                 <p class="text-sm font-bold">{{ \Carbon\Carbon::parse($date)->format('d') }}</p>
                                 <p class="text-xs">{{ \Carbon\Carbon::parse($date)->format('M y') }}</p>
@@ -55,7 +60,7 @@
                     @endforeach
                 </div>
             @endforeach
-    </div>
+        </div>
     
 </div>
 @endsection
