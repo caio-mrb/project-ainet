@@ -111,9 +111,9 @@
                                 content="Profile"
                                 selectable="0"
                                 :href="match(Auth::user()->type) {
-                                    'A' => route('administratives.edit', ['administrative' => Auth::user()]),
-                                    'E' => route('employees.edit', ['employee' => Auth::user()]),
-                                    'C' => route('customers.edit', ['customer' => Auth::user()->customer]),
+                                    'A' => route('administratives.show', ['administrative' => Auth::user()]),
+                                    'E' => route('employees.show', ['employee' => Auth::user()]),
+                                    'C' => route('customers.show', ['customer' => Auth::user()->customer]),
                                 }"/>
                             <x-menus.submenu-item
                                 content="Change Password"
@@ -160,16 +160,16 @@
             </div>
         </nav>
 
-        <!-- Page Heading -- >
-        <header class="bg-white dark:bg-gray-900 shadow">
-            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                
+        <header class="max-w-7xl bg-white mx-auto dark:bg-gray-900">
+            <div class="pt-6 py-2 px-4 sm:px-6 lg:px-8">
+                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                    @yield('header-title')
+                </h2>
             </div>
         </header>
-        -->
 
         <main>
-            <div class="max-w-7xl bg-white h-auto mx-auto py-6 sm:px-6 lg:px-8">
+            <div class="max-w-7xl bg-white h-auto mx-auto py-2 sm:px-6 lg:px-8">
                 @if (session('alert-msg'))
                     <x-alert type="{{ session('alert-type') ?? 'info' }}">
                         {!! session('alert-msg') !!}

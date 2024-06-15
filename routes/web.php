@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 
 /* ----- PUBLIC ROUTES ----- */
 
-Route::get('/', [MovieController::class, 'index'])
+Route::get('/', [MovieController::class, 'onShowIndex'])
     ->name('home');
 
 Route::get('courses/showcase', [CourseController::class, 'showCase'])

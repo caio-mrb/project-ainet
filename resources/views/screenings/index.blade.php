@@ -1,5 +1,13 @@
 @extends('layouts.main')
 
+@section('header-title')
+<div class="w-full flex place-content-between space-between">
+    <p>Cinema: {{$screening->theater->name}} </p>
+    <p>Filme: {{$screening->movie->title}}</p>
+    <p>Sessão: {{\Carbon\Carbon::parse($screening->date)->format('d/m/y')}} - {{ \Carbon\Carbon::parse($screening->start_time)->format('H:i') }}</p>
+</div>
+@endsection
+
 @section('main')
     <form action="{{ route('cart.add', ['screening' => $screening]) }}" method="POST" class="flex overflow-x-auto  flex-col space-y-2">
         @csrf

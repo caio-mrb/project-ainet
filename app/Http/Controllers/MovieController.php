@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 class MovieController extends Controller
 {
-    public function index(Request $request, Collection $genres)
+    public function onShowIndex(Request $request, Collection $genres)
     {    
         $genres = Genre::all();
 
@@ -47,7 +47,7 @@ class MovieController extends Controller
         $movies = $moviesQuery
             ->paginate(20);
     
-        return view('movies.index')
+        return view('movies.onshow-index')
         ->with('movies',$movies)
         ->with('genres',$genres)
         ->with('request',$request);

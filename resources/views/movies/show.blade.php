@@ -1,5 +1,5 @@
 @extends('layouts.main')
-
+@section('header-title', $movie->title)
 @section('main')
 
 <div class="movie-card flex flex-col md:flex-row">
@@ -14,7 +14,6 @@
         " alt="{{ $movie->title }}">
     </div>
     <div class="flex flex-col">
-        <h2>{{ $movie->title }}</h2>
         <p><strong>Gênero:</strong> {{ $movie->genres->name }}</p>
         <p><strong>Ano:</strong> {{ $movie->year }}</p>
         <p><strong>Sinopse:</strong> {{ $movie->synopsis }}</p>
