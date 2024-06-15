@@ -1,5 +1,3 @@
-
-
 <style>
     .flipped {
         transform: rotateY(-180deg);
@@ -16,8 +14,8 @@
 @mouseenter="if(window.innerWidth >= 768) flipped = true" 
 @mouseleave="if(window.innerWidth >= 768) flipped = false">
     <div :class="{'flipped': flipped}" style="transition: transform 0.6s; transform-style: preserve-3d;" class="flip-inner w-full h-full relative">
-        <a class="absolute w-full h-full visible md:invisible cursor-pointer z-20/20" href="{{ route('movies.show', ['movie' => $movie]) }}"></a>
-        <div class="absolute visible md:invisible h-20 w-full bg-gradient-to-b from-black z-10"></div>
+        <a class="absolute w-full h-full visible md:invisible cursor-pointer z-20" href="{{ route('movies.show', ['movie' => $movie]) }}"></a>
+        <div class="absolute visible md:invisible bottom-0 h-20 w-full bg-gradient-to-t from-black z-10"><span class="absolute p-2 uppercase bottom-0 self-bottom text-white font-md font-semibold ">{{ $movie->title }}</span></div>
         <div style="backface-visibility: hidden;" class="absolute top-0 left-0 w-full h-full text-white flex items-center justify-center rounded-lg">
             <img src="
             @if($movie->poster_filename)

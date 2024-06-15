@@ -26,7 +26,7 @@
         @endif
         <p><strong>Sessões:</strong></p>
         <div>
-            @foreach($movie->screenings->groupBy('theater_id') as $screeningsByTheater)
+            @foreach($screenings->groupBy('theater_id') as $screeningsByTheater)
                 <div class="w-full bg-primary-red text-gray-200 font-bold">
                     <p>Cinema: {{ $screeningsByTheater->first()->theater->name }}</p>
                 </div>
@@ -41,14 +41,14 @@
                             @foreach($screeningsByDate as $screening)
                             
                             <div class="relative flex">
-                            @if($isFull = false)
+                            @if($isFull = $screening->isFull)
                                 <div class="absolute h-min w-min p-1 left-3 top-2.5 font-bold text-xs text-gray-200 select-none rotate-12 z-20 uppercase">Esgotado</div>
                                 <svg class="absolute left-1.5 bottom-0 rotate-12 fill-primary-red z-10" width="82" height="90" viewBox="0 0 407 90" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M0 0H407L364 43.7671L407 90H0L43 45L0 0Z"/>
                                 </svg>
                             @endif
-                                <x-button class="self-center ms-2 z-0" type="{{$isFull = false ? 'rounded-secondary' : 'rounded-primary'}}" text="{{ \Carbon\Carbon::parse($screening->start_time)->format('H:i') }}" 
-                                    href="{{$isFull = false ? '' :  route('screening.index', ['screening' => $screening]) }}"/>
+                                <x-button class="self-center ms-2 z-0" type="{{$isFull = $screening->isFull ? 'rounded-secondary' : 'rounded-primary'}}" text="{{ \Carbon\Carbon::parse($screening->start_time)->format('H:i') }}" 
+                                    href="{{$isFull = $screening->isFull ? '' :  route('screening.index', ['screening' => $screening]) }}"/>
                             </div>
                             @endforeach
                         </div>

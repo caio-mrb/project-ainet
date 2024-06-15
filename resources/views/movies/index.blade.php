@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('main')
-<div class="filter-card">
+<div class="filter-card px-4">
     <form method="GET" action="{{ route('home') }}">
         <div>
             <x-input-label for="genre" :value="__('Gênero')" />

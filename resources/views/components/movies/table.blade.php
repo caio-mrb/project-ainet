@@ -1,5 +1,5 @@
-<div class="w-full flex justify-items-center justify-center {{ $attributes }}">
-<div class="flex flex-row flex-wrap gap-4 md:w-full lg:w-3/4" >
+<div class="w-full flex justify-items-center justify-center mt-4 {{ $attributes }}">
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-center items-center" >
     @foreach($movies as $movie)
         <x-movies.card :movie="$movie"></x-movies>
     @endforeach

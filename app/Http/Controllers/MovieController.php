@@ -7,6 +7,8 @@ use App\Models\Movie;
 use App\Models\Genre;
 
 use App\Models\Screening;
+use App\Models\Seat;
+use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Collection;
@@ -53,8 +55,39 @@ class MovieController extends Controller
 
     public function show(Movie $movie)
     {
+        $screenings = $movie->screenings;
+        $cart = session('cart', collect());
+    
+        foreach ($screenings as $screening) {
+            $seats = Seat::where('theater_id', $screening->theater_id)->get();
+            $isFull = true;
+    
+            foreach ($seats as $seat) {
+                $isInCart = $cart->contains(function ($item) use ($seat, $screening) {
+                    return $item['seat']['id'] === $seat->id && $item['screening']['id'] === $screening->id;
+                });
+    
+                if ($isInCart) {
+                    $isFree = false;
+                } else {
+                    $ticket = Ticket::where('screening_id', $screening->id)
+                                    ->where('seat_id', $seat->id)
+                                    ->first();
+    
+                    $isFree = $ticket ? false : true;
+                }
+    
+                if ($isFree) {
+                    $isFull = false;
+                    break;
+                }
+            }
+            $screening->isFull = $isFull;
+        }
+    
         return view('movies.show')
-            ->with('movie',$movie);
+            ->with('movie', $movie)
+            ->with('screenings', $screenings);
     }
 
 }
