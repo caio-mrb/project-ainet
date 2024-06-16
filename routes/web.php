@@ -44,14 +44,14 @@ Route::get('courses/{course}/curriculum', [CourseController::class, 'showCurricu
 
     
 Route::get('/administratives/{administrative}/edit', [AdministrativeController::class, 'show'])
-        ->name('administratives.edit');
+        ->name('administratives.show');
         
 
 Route::get('/employees/{employee}/edit', [EmployeeController::class, 'edit'])
-        ->name('employees.edit');
+        ->name('employees.show');
 
 Route::get('/customers/{customer}/edit', [CustomerController::class, 'edit'])
-        ->name('customers.edit');
+        ->name('customers.show');
 
 
 /* ----- Non-Verified users ----- */
