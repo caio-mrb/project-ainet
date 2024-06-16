@@ -1,25 +1,21 @@
 <div {{ $attributes }}>
     <form method="GET" action="{{ $filterAction }}">
-        <div class="flex justify-between space-x-3">
-            <div class="grow flex flex-col space-y-2">
-                <div>
-                    <x-field.select name="genre" label="Genre"
-                        value="{{ $genre}}"
-                        :options="$genres"/>
-                </div>
-                <div>
-                    <x-field.input name="name" label="Name" class="grow"
+        <div class="flex flex-row w-full gap-6">
+                
+                    <x-field.input name="name" label="Name"
                         value="{{ $name }}"/>
-                </div>
-            </div>
-            <div class="grow-0 flex flex-col space-y-3 justify-start">
-                <div class="pt-6">
-                    <x-button element="submit" type="dark" text="Filter"/>
-                </div>
-                <div>
-                    <x-button element="a" type="light" text="Cancel" :href="$resetUrl"/>
-                </div>
-            </div>
+
+                    <x-field.select name="genre" label="Gênero"
+                        value="{{ $genre}}"
+                        :options="$listGenres"/>
+        </div>
+    
+        <div class="flex items-center gap-2 justify-end mt-4">    
+            <x-button element="a" type="light" text="Cancel" :href="$resetUrl"/>
+            <x-button
+                            element="submit"
+                            type="secondary"
+                            text="Buscar"/>
         </div>
     </form>
 </div>

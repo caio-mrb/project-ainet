@@ -28,7 +28,7 @@
     }
 @endphp
 <div {{ $attributes->merge(['class' => "$widthClass"]) }}>
-    <label class="block font-medium text-sm text-gray-700 dark:text-gray-300" for="id_{{ $name }}">
+    <label class="block font-medium text-sm text-primary-red dark:text-gray-300" for="id_{{ $name }}">
         {{ $label }}
     </label>
     <input id="id_{{ $name }}" name="{{ $name }}" type="{{ $type }}" value="{{ $value }}"
@@ -41,7 +41,7 @@
             @else
                 border-gray-300 dark:border-gray-700
             @enderror
-            focus:border-indigo-500 dark:focus:border-indigo-400
+            focus:border-secondary-gray dark:focus:border-indigo-400
             focus:ring-indigo-500 dark:focus:ring-indigo-400
             rounded-md shadow-sm
             disabled:rounded-none disabled:shadow-none

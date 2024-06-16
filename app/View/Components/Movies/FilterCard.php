@@ -5,22 +5,22 @@ namespace App\View\Components\Movies;
 use Closure;
 use App\Models\Movie;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Route;
 use Illuminate\View\Component;
 
 class FilterCard extends Component
 {
+    public array $listGenres;
+
     public function __construct(
-        public object $movies,
-        public object $genres,
-        public object $years,
+        public array $genres,
         public string $filterAction,
         public string $resetUrl,
-        public ?string $movie = null,
+        public ?string $name = null,
         public ?string $genre = null,
-        public ?int $year = null,
     )
     {
-        
+        $this->listGenres = (array_merge([null => 'Qualquer gênero'], $genres));
     }
 
     /**
