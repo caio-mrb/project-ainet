@@ -46,7 +46,7 @@
                                 <p class="text-xs">{{ \Carbon\Carbon::parse($date)->format('M y') }}</p>
                             </div>
                             @foreach($screeningsByDate as $screening)
-                            @if(Carbon\Carbon::parse($screening->date . ' ' .$screening->starttime)->addMinutes(5)->lt(Carbon\Carbon::now()))
+                            @if(Carbon\Carbon::parse($screening->date . ' ' .$screening->start_time)->addMinutes(5)->lt(Carbon\Carbon::now()))
                                 @continue
                             @endif
                             
