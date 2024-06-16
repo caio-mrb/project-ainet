@@ -22,7 +22,8 @@
     </div>
     @endif
     @if($route == 'movie.index')
-        
+        {{ $movies = Movies::all()}}
+
     @endif
 
     <div class="p-6">
