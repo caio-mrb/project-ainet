@@ -1,11 +1,12 @@
 @php
 $mode = $mode ?? 'edit';
 $readonly = $mode == 'show';
+
 @endphp
-<x-field.input :required="true" name="customer_name" label="Name" width="md" :readonly="$readonly || ($mode == 'edit')" value="{{ $user?->name }}" />
-<x-field.input :required="true" name="customer_email" label="Email" width="md" :readonly="$readonly" value="{{ $user?->email }}" />
+<x-field.input required name="customer_name" label="Name" type="name" width="md" :readonly="$readonly" value="{{ $user?->name }}" />
+<x-field.input required name="customer_email" label="Email" type="email" width="md" :readonly="$readonly" value="{{ $user?->email }}" />
 <x-field.input name="nif" label="NIF" :readonly="$readonly" value="{{ $user?->customer?->nif }}" />
-<x-field.radio-group :required="true" name="payment_type" label="Type of payment"  :readonly="$readonly" value="{{ $user?->customer?->payment_type }}" :options="[
+<x-field.radio-group required name="payment_type" label="Type of payment"  :readonly="$readonly" value="{{ $user?->customer?->payment_type }}" :options="[
                 'MBWAY' => 'MBWAY',
                 'VISA' => 'VISA',
                 'PAYPAL' => 'PAYPAL'

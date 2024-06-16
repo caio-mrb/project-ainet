@@ -3,6 +3,9 @@
 @section('header-title', 'Carrinho')
 
 @section('main')
+<div class="flex flex-row gap-6 w-full justify-center" >
+
+
     <div class="flex justify-center">
         <div class="my-4 p-6 bg-white dark:bg-gray-900 overflow-hidden
                     shadow sm:rounded-lg text-gray-900 dark:text-gray-50">
@@ -10,10 +13,10 @@
                 <h3 class="text-xl w-96 text-center">Cart is Empty</h3>
             @else
             <div class="font-base text-sm text-gray-700 dark:text-gray-300">
-                <x-screenings.table :cart="$cart" :configuration="$configuration"></x-screening>
+                <x-cart.table :cart="$cart" :configuration="$configuration"></x-cart>
             </div>
             <div class="mt-2">
-                <div class="flex justify-between space-x-12 items-end">
+                <div class="flex justify-start space-x-12 items-end">
                     <div>
                         <form action="{{ route('cart.destroy') }}" method="POST">
                             @csrf
@@ -21,15 +24,12 @@
                             <x-button element="submit" type="danger" text="Limpar Carrinho" class="mt-4"/>
                         </form>
                     </div>
-                    <div>
-                        <form action="{{ route('cart.confirm') }}" method="post">
-                            @csrf
-                                <x-button element="submit" type="dark" text="Confirmar" class="mt-4"/>
-                        </form>
-                    </div>
                 </div>
             </div>
             @endempty
         </div>
     </div>
+
+    @include('purchase.create')
+</div>
 @endsection
