@@ -28,7 +28,7 @@ class PurchaseController extends Controller
         $discount = $configuration['0']->registered_customer_ticket_discount;
 
         $validatedData = $request->validated();
-
+        
         $sessionData = [
             'customer_id' => $user?->id,
             'date' => Carbon::today(),

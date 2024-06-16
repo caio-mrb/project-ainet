@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\User;
-use App\Http\Requests\CartConfirmationFormRequest;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -110,18 +109,14 @@ class CartController extends Controller
     }
 
 
-    public function confirm(CartConfirmationFormRequest $request)
+    public function confirm(Request $request): View
     {
         $cart = session('cart', null);
         if (!$cart || ($cart->count() == 0)) {
             return back()
                 ->with('alert-type', 'danger')
-                ->with('alert-msg', "Cart was not confirmed, because cart is empty!");
+                ->with('alert-msg', "O carrinho não foi confirmado pois está vazio!");
         }
-        if(Auth::check()){
-            $user = Auth::user();
-            return view('purchase.create')->with('user', $user); 
-        }
-        return view('purchase.create')->with('user', null);
+        return view('purchase.create');
     }
 }

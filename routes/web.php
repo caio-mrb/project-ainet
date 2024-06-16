@@ -133,7 +133,7 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::post('purchase',[PurchaseController::class,'store'])
         ->name('purchase.store');
 
-    Route::get('purchase',[PurchaseController::class, 'show'])
+    Route::get('purchase/{purchase}',[PurchaseController::class, 'show'])
         ->name('purchase.show');
 
     Route::post('cart', [CartController::class, 'confirm'])
@@ -146,7 +146,7 @@ Route::middleware('auth', 'verified')->group(function () {
         ->name('cart.remove');
 
     Route::get('cart', [CartController::class, 'show'])
-    ->name('cart.show');
+        ->name('cart.show');
 
     Route::delete('cart', [CartController::class, 'destroy'])->name('cart.destroy');
 
