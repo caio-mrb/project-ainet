@@ -58,7 +58,7 @@
                                 </svg>
                             @endif
                                 <x-button class="self-center ms-2 z-0" type="{{$isFull = $screening->isFull ? 'rounded-secondary' : 'rounded-primary'}}" text="{{ \Carbon\Carbon::parse($screening->start_time)->format('H:i') }}" 
-                                    href="{{$isFull = $screening->isFull ? '' :  route('screening.index', ['screening' => $screening]) }}"/>
+                                    href="{{$isFull = $screening->isFull ? '' :  route('screening.seats-index', ['screening' => $screening]) }}"/>
                             </div>
                             
                             @endforeach

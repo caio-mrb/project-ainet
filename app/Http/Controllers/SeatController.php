@@ -12,4 +12,5 @@ use Illuminate\Http\Request;
 class SeatController extends Controller
 {
 
+    
 }

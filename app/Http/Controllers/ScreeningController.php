@@ -11,8 +11,7 @@ use Illuminate\Http\Request;
 
 class ScreeningController extends Controller
 {
-    public function index(Screening $screening)
-    {
+    public function seatsIndex(Screening $screening){
         $seats = Seat::where('theater_id', $screening->theater_id)->get();
 
         $cart = session('cart', collect());
@@ -40,8 +39,12 @@ class ScreeningController extends Controller
             ];
         }
         
-        return view('screenings.index')
+        return view('screenings.seats-index')
             ->with('seatAvailability',$seatAvailability)
             ->with('screening',$screening);
-    }  
+    } 
+    
+    public function index(Request $request){
+        return view('screenings.index');
+    }
 }

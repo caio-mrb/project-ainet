@@ -22,4 +22,12 @@ class CustomerController extends \Illuminate\Routing\Controller
         return view('customers.edit')
             ->with('customer', $customer);
     }
+
+    
+    public function index(Request $request){
+        $users = User::paginate(20);
+
+        return view('customers.index')
+            ->with('users', $users);
+    }
 }

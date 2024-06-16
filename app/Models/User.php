@@ -63,6 +63,21 @@ class User extends Authenticatable
         }
     }
 
+    public function maskedEmail()
+    {
+
+        list($local, $domain) = explode('@', $this->email);
+
+        $start = ceil(strlen($local) / 3);
+        $end = strlen($local) - ceil(strlen($local) / 3);
+
+        $maskedPart = str_repeat('*', $end - $start);
+
+        $maskedEmail = substr($local, 0, $start) . $maskedPart . substr($local, $end) . '@' . $domain;
+
+        return $maskedEmail;
+    }
+
     public function isAdmin()
     {
         // Supondo que você tenha uma coluna 'role' no banco de dados

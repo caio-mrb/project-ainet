@@ -1,4 +1,4 @@
 @extends('layouts.main')
-@section('header-title', 'Sessões')
+@section('header-title', 'Bilhetes')
 @section('main')
 @endsection
