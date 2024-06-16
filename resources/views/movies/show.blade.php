@@ -34,8 +34,11 @@
                 <div class="w-full bg-primary-red text-gray-200 font-bold p-2 rounded-t-md">
                     <p>Cinema: {{ $screeningsByTheater->first()->theater->name }}</p>
                 </div>
-                <div class="flex flex-col overflow-auto h-48 rounded-b-md">
+                <div class="flex flex-col overflow-y-auto h-48 rounded-b-md">
                     @foreach($screeningsByTheater->groupBy('date') as $date => $screeningsByDate)
+                        @if(Carbon\Carbon::parse($date)->lt(Carbon\Carbon::today()))
+                            @continue
+                        @endif
                         <div class="flex flex-row content-center">
                             <div class="flex flex-col text-center text-gray-200 bg-gray-500 px-2 py-1">
                                 <p class="text-xs">{{ \Carbon\Carbon::parse($date)->format('D') }}</p>
@@ -43,6 +46,9 @@
                                 <p class="text-xs">{{ \Carbon\Carbon::parse($date)->format('M y') }}</p>
                             </div>
                             @foreach($screeningsByDate as $screening)
+                            @if(Carbon\Carbon::parse($screening->date . ' ' .$screening->starttime)->addMinutes(5)->lt(Carbon\Carbon::now()))
+                                @continue
+                            @endif
                             
                             <div class="relative flex">
                             @if($isFull = $screening->isFull)
@@ -54,9 +60,11 @@
                                 <x-button class="self-center ms-2 z-0" type="{{$isFull = $screening->isFull ? 'rounded-secondary' : 'rounded-primary'}}" text="{{ \Carbon\Carbon::parse($screening->start_time)->format('H:i') }}" 
                                     href="{{$isFull = $screening->isFull ? '' :  route('screening.index', ['screening' => $screening]) }}"/>
                             </div>
+                            
                             @endforeach
                         </div>
                         <hr>
+                        
                     @endforeach
                 </div>
             @endforeach

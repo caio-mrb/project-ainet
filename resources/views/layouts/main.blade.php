@@ -40,6 +40,35 @@
                                 href="{{ route('home') }}"
                                 selected="{{ Route::currentRouteName() == 'home'}}"
                             />
+                            
+                            <x-menus.menu-item
+                                content="Filmes"
+                                href="{{ route('home') }}"
+                                selected="{{ Route::currentRouteName() == 'home'}}"
+                            />
+
+                            <x-menus.menu-item
+                                content="Cinemas"
+                                href="{{ route('home') }}"
+                                selected="{{ Route::currentRouteName() == 'home'}}"
+                            />
+                            <x-menus.menu-item
+                                content="Sessões"
+                                href="{{ route('home') }}"
+                                selected="{{ Route::currentRouteName() == 'home'}}"
+                            />
+                            
+                            <x-menus.menu-item
+                                content="Bilhetes"
+                                href="{{ route('home') }}"
+                                selected="{{ Route::currentRouteName() == 'home'}}"
+                            />
+                            
+                            <x-menus.menu-item
+                                content="Usuários"
+                                href="{{ route('home') }}"
+                                selected="{{ Route::currentRouteName() == 'home'}}"
+                            />
 
                         {{-- If user has any of the 4 menu options previlege, then it should show the submenu --}}
                         @if(

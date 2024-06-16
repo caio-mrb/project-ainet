@@ -18,13 +18,13 @@
                         <form action="{{ route('cart.destroy') }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <x-button element="submit" type="danger" text="Clear Cart" class="mt-4"/>
+                            <x-button element="submit" type="danger" text="Limpar Carrinho" class="mt-4"/>
                         </form>
                     </div>
                     <div>
                         <form action="{{ route('cart.confirm') }}" method="post">
                             @csrf
-                                <x-button element="submit" type="dark" text="Confirm" class="mt-4"/>
+                                <x-button element="submit" type="dark" text="Confirmar" class="mt-4"/>
                         </form>
                     </div>
                 </div>

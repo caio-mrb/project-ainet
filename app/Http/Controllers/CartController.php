@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 use App\Models\User;
 use App\Http\Requests\CartConfirmationFormRequest;
 use Illuminate\Http\Request;
@@ -34,10 +35,17 @@ class CartController extends Controller
         $screening = Screening::find($request->input('screening_id'));
 
         if (!$screening) {
-            return back()->with('alert-msg', 'Screening not found')->with('alert-type', 'error');
+            return back()->with('alert-msg', 'Sessão não encontrada!')->with('alert-type', 'danger');
+        }
+
+        $screeningDatePlusFiveMin = Carbon::parse($screening->date . ' ' . $screening->start_time)->addMinutes(5) ;
+
+        if($screeningDatePlusFiveMin->lt(Carbon::now()) ){
+            return back()->with('alert-msg', 'Esta sessão está indisponível!')->with('alert-type', 'danger');
         }
 
         $selectedSeats = $request->input('seats', []);
+
         foreach ($selectedSeats as $seatId => $value) {
             $seat = Seat::find($seatId);
             if ($seat && filter_var($value, FILTER_VALIDATE_BOOLEAN)) {
