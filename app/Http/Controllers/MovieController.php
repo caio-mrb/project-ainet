@@ -16,41 +16,50 @@ use Illuminate\Database\Eloquent\Collection;
 
 class MovieController extends Controller
 {
-    public function onShowIndex(Request $request, Collection $genres)
+    public function index(Request $request)
     {    
+        $filterByGenre = $request->query('genre');
+        $filterByName = $request->query('name');
+        $filterByOnShow = $request->is('/');
+        $route = 'movies.index';
+
         $genres = Genre::all();
-
-        $genre = $request->query('genre');
-        $search = $request->query('search');
-
         $moviesQuery = Movie::query();
         
         $todayDate = Carbon::today();
         $twoWeeksLater = Carbon::today()->addWeeks(2);
 
-        if ($genre) {
-            $moviesQuery->where('genre_code', $genre);
+        if ($filterByGenre) {
+            $moviesQuery->where('genre_code', $filterByGenre);
         }
 
-        if ($search) {
-            $moviesQuery->where(function ($query) use ($search) {
-                $query->where('title', 'like', '%' . $search . '%')
-                      ->orWhere('synopsis', 'like', '%' . $search . '%');
+        if ($filterByName) {
+            $moviesQuery->where(function ($query) use ($filterByName) {
+                $query->where('title', 'like', '%' . $filterByName . '%')
+                      ->orWhere('synopsis', 'like', '%' . $filterByName . '%');
             });
         }
 
-        $moviesQuery->whereHas('screenings', function ($query) use ($todayDate, $twoWeeksLater) {
-            $query->whereBetween('date', [$todayDate, $twoWeeksLater]);
-        })->orderBy('title');
+        if ($filterByOnShow){
+            $moviesQuery->whereHas('screenings', function ($query) use ($todayDate, $twoWeeksLater) {
+                $query->whereBetween('date', [$todayDate, $twoWeeksLater]);
+            });
+            $route = 'home';
+        }
     
         
         $movies = $moviesQuery
-            ->paginate(20);
+            ->orderBy('title')
+            ->orderBy('year')
+            ->paginate(8)
+            ->withQueryString();
     
-        return view('movies.onshow-index')
-        ->with('movies',$movies)
-        ->with('genres',$genres)
-        ->with('request',$request);
+        return view('movies.index')
+            ->with('route',$route)
+            ->with('genres',$genres)
+            ->with('movies',$movies)
+            ->with('filterByGenre',$filterByGenre)
+            ->with('filterByName',$filterByName);
     }
 
     public function show(Movie $movie)
@@ -90,7 +99,4 @@ class MovieController extends Controller
             ->with('screenings', $screenings);
     }
 
-    public function index(Request $request){
-        return view('movies.index');
-    }
 }

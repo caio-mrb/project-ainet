@@ -29,7 +29,10 @@
             <div class="font-base text-sm text-gray-700 dark:text-gray-300">
 
             </div>
-            {{$users->links()}}
+            <div>
+                {{$users->links()}}
+            </div>
+            
         </div>
     </div>
 @endsection
