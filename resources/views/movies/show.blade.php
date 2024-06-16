@@ -52,7 +52,7 @@
                             
                             <div class="relative flex">
                             @if($isFull = $screening->isFull)
-                                <div class="absolute h-min w-min p-1 left-3 top-2.5 font-bold text-xs text-gray-200 select-none rotate-12 z-20 uppercase">Esgotado</div>
+                                <div class="absolute h-min w-min p-1 left-3 top-1.5 font-bold text-xs text-gray-200 select-none rotate-12 z-20 uppercase">Esgotado</div>
                                 <svg class="absolute left-1.5 bottom-0 rotate-12 fill-primary-red z-10" width="82" height="90" viewBox="0 0 407 90" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M0 0H407L364 43.7671L407 90H0L43 45L0 0Z"/>
                                 </svg>

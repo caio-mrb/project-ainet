@@ -129,11 +129,12 @@ Route::middleware('auth', 'verified')->group(function () {
 
 /* ----- OTHER PUBLIC ROUTES ----- */
 
-    Route::post('purchase',[PurchaseController::class,'payment'])
-        ->name('purchase.payment');
 
     Route::post('purchase',[PurchaseController::class,'store'])
         ->name('purchase.store');
+
+    Route::get('purchase',[PurchaseController::class, 'show'])
+        ->name('purchase.show');
 
     Route::post('cart', [CartController::class, 'confirm'])
         ->name('cart.confirm');
