@@ -7,6 +7,7 @@ use App\Http\Requests\PurchaseFormRequest;
 use Illuminate\Http\RedirectResponse;
 use App\Models\Purchase;
 use App\Models\Ticket;
+use App\Services\Payment;
 use App\Models\Configuration;
 use Illuminate\View\View;
 use Carbon\Carbon;
@@ -24,17 +25,39 @@ class PurchaseController extends Controller
         $cart = session('cart', null);
         $configuration = Configuration::all();
 
+        if(!$cart ){
+            return back()
+            ->with('alert-type', 'warning')
+            ->with('alert-msg', 'O carrinho está vazio!');
+        }
+
         $ticket_price = $configuration['0']->ticket_price;
         $discount = $configuration['0']->registered_customer_ticket_discount;
 
         $validatedData = $request->validated();
-        
+
+        $validPaymentMehod = match($validatedData['payment_type'])
+        {
+            'VISA' => Payment::payWithVisa(substr($validatedData['payment_ref'], 0, -3), substr($validatedData['payment_ref'], -3)),
+            'PAYPAL' => Payment::payWithPaypal($validatedData['payment_ref']),
+            'MBWAY' => Payment::payWithMbway($validatedData['payment_ref']),
+            default => false,
+        };
+
+        if(!$validPaymentMehod){
+            return back()
+            ->with('alert-type', 'warning')
+            ->with('alert-msg', 'Método de pagamento invalido!');
+        }
+
         $sessionData = [
             'customer_id' => $user?->id,
             'date' => Carbon::today(),
             'total_price' => Session::get('total_price'),
             'receipt_pdf_filename' => null
         ];
+
+        
 
         $combinedData = array_merge($validatedData, $sessionData);
 
@@ -54,9 +77,9 @@ class PurchaseController extends Controller
         $request->session()->forget('cart');
 
         $url = route('purchase.show', ['purchase' => $newPurchase]);
-        $htmlMessage = "Purchase <a href='$url'><u>{$newPurchase->id}</u></a> ({$newPurchase->id}) has been made successfully!";
+        $htmlMessage = "Compra <a href='$url'><u>#{$newPurchase->id}</u></a> has been made successfully!";
         
-        return redirect()->route('cart.show')
+        return back()
             ->with('alert-type', 'success')
             ->with('alert-msg', $htmlMessage);
     }   

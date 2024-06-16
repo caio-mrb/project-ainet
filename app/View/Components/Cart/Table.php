@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\Screenings;
+namespace App\View\Components\Cart;
 
 use Closure;
 use Illuminate\Support\Collection;
