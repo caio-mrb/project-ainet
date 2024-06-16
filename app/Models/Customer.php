@@ -18,9 +18,9 @@ class Customer extends Model
         'payment_ref',
     ];   
 
-    public function user(): BelongsTo
+    public function user()
     {
-        return $this->belongsTo(User::class, 'id');
+        return $this->belongsTo(User::class, 'id', 'id');
     }
 
     public function purchases(): HasMany

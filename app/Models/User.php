@@ -51,7 +51,7 @@ class User extends Authenticatable
 
     public function customer(): HasOne
     {
-        return $this->hasOne(User::class, 'id');
+        return $this->hasOne(User::class, 'id', 'id');
     }
 
     public function getPhotoFullUrlAttribute()

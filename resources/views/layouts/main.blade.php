@@ -43,31 +43,31 @@
                             
                             <x-menus.menu-item
                                 content="Filmes"
-                                href="{{ route('home') }}"
-                                selected="{{ Route::currentRouteName() == 'home'}}"
+                                href="{{ route('movies.index') }}"
+                                selected="{{ Route::currentRouteName() == 'movies.index'}}"
                             />
 
                             <x-menus.menu-item
                                 content="Cinemas"
-                                href="{{ route('home') }}"
-                                selected="{{ Route::currentRouteName() == 'home'}}"
+                                href="{{ route('theaters.index') }}"
+                                selected="{{ Route::currentRouteName() == 'theaters.index'}}"
                             />
                             <x-menus.menu-item
                                 content="Sessões"
-                                href="{{ route('home') }}"
-                                selected="{{ Route::currentRouteName() == 'home'}}"
+                                href="{{ route('screenings.index') }}"
+                                selected="{{ Route::currentRouteName() == 'screenings.index'}}"
                             />
                             
                             <x-menus.menu-item
                                 content="Bilhetes"
-                                href="{{ route('home') }}"
-                                selected="{{ Route::currentRouteName() == 'home'}}"
+                                href="{{ route('tickets.index') }}"
+                                selected="{{ Route::currentRouteName() == 'tickets.index'}}"
                             />
                             
                             <x-menus.menu-item
                                 content="Usuários"
-                                href="{{ route('home') }}"
-                                selected="{{ Route::currentRouteName() == 'home'}}"
+                                href="{{ route('customers.index') }}"
+                                selected="{{ Route::currentRouteName() == 'customers.index'}}"
                             />
 
                         {{-- If user has any of the 4 menu options previlege, then it should show the submenu --}}

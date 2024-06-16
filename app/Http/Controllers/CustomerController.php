@@ -22,4 +22,9 @@ class CustomerController extends \Illuminate\Routing\Controller
         return view('customers.edit')
             ->with('customer', $customer);
     }
+
+    
+    public function index(Request $request){
+        return view('customers.index');
+    }
 }

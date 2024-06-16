@@ -90,4 +90,7 @@ class MovieController extends Controller
             ->with('screenings', $screenings);
     }
 
+    public function index(Request $request){
+        return view('movies.index');
+    }
 }
