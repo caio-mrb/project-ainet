@@ -41,7 +41,7 @@
             @else
                 border-gray-300 dark:border-gray-700
             @enderror
-            focus:border-indigo-500 dark:focus:border-indigo-400
+            focus:border-secondary-gray dark:focus:border-indigo-400
             focus:ring-indigo-500 dark:focus:ring-indigo-400
             rounded-md shadow-sm
             disabled:rounded-none disabled:shadow-none
