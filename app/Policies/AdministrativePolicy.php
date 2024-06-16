@@ -22,6 +22,9 @@ class AdministrativePolicy
         return $user->type == 'A';
     }
 
+
+    
+
     public function create(User $user): bool
     {
         return false;
