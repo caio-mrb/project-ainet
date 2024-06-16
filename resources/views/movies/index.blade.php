@@ -22,7 +22,7 @@
     </div>
     @endif
     @if($route == 'movie.index')
-        
+
     @endif
 
     <div class="p-6">

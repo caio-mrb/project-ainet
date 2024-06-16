@@ -14,12 +14,13 @@
                     </p>
                 </header>
                 <form method="POST" action="{{ route('purchase.store') }}">
+
                     @csrf
                     <div class="mt-6 space-y-4">
                         @if (Auth::check())
-                        @include('purchase.shared.fields', ['mode' => 'show'])
+                            @include('purchase.shared.fields', ['mode' => 'create'])
                         @else
-                        @include('purchase.shared.fields', ['mode' => 'create'])
+                            @include('purchase.shared.fields', ['mode' => 'create'])
                         @endif
                     </div>
                     <div class="flex mt-6">
