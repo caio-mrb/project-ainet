@@ -129,6 +129,8 @@ Route::middleware('auth', 'verified')->group(function () {
 
 /* ----- OTHER PUBLIC ROUTES ----- */
 
+    Route::post('purchase',[PurchaseController::class,'payment'])
+        ->name('purchase.payment');
 
     Route::post('purchase',[PurchaseController::class,'store'])
         ->name('purchase.store');

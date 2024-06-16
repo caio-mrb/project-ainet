@@ -17,13 +17,15 @@
                     @csrf
                     <div class="mt-6 space-y-4">
                         @if (Auth::check())
-                            @include('purchase.shared.fields', ['mode' => 'show'])
+                        @include('purchase.shared.fields', ['mode' => 'show'])
                         @else
-                            @include('purchase.shared.fields', ['mode' => 'create'])
+                        @include('purchase.shared.fields', ['mode' => 'create'])
                         @endif
-                        </div>
+                    </div>
                     <div class="flex mt-6">
-                        <x-button element="submit" type="dark" text="Save purchase" class="uppercase" />
+                        <div class="font-base text-sm text-gray-700 dark:text-gray-300">
+                        </div>
+                        <x-button element="submit" type="dark" text="Confirm & Pay" class="uppercase" />
                     </div>
                 </form>
             </section>

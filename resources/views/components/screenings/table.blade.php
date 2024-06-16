@@ -37,7 +37,8 @@
         <tfoot>
             <tr class="border-b border-b-gray-400 dark:border-b-gray-500">
                 <td colspan="5" class="text-right font-bold">Total: </td>
-                <td class="text-left font-bold">{{  " €" . number_format($totalPrice,2) }}</td>
+                <td class="text-left font-bold">{{  " €" . number_format($totalPrice,2)}}</td>
+                {{ session()->put('total_price', $totalPrice) }}
             </tr>
         </tfoot>
     </table>
