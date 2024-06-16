@@ -20,10 +20,16 @@
                         type="success"/>
                 </div>
             @endcan
+
+            @foreach($users as $user)
+                {{$user->name}}
+
+
+            @endforeach
             <div class="font-base text-sm text-gray-700 dark:text-gray-300">
 
             </div>
-            
+            {{$users->links()}}
         </div>
     </div>
 @endsection

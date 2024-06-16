@@ -25,6 +25,9 @@ class CustomerController extends \Illuminate\Routing\Controller
 
     
     public function index(Request $request){
-        return view('customers.index');
+        $users = User::paginate(20);
+
+        return view('customers.index')
+            ->with('users', $users);
     }
 }
