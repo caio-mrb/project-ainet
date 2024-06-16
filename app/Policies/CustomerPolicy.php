@@ -15,7 +15,7 @@ class CustomerPolicy
         if ($user?->type === 'A')
             return true;
     
-        return null;
+        return true;
     }
     /**
      * Determine whether the user can view any models.

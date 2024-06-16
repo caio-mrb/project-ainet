@@ -13,7 +13,7 @@
                 <h3 class="text-xl w-96 text-center">Cart is Empty</h3>
             @else
             <div class="font-base text-sm text-gray-700 dark:text-gray-300">
-                <x-cart.table class='overflow-y-scroll h-[500px]' :cart="$cart" :configuration="$configuration"></x-cart>
+                <x-cart.table class='overflow-y-auto h-[500px]' :cart="$cart" :configuration="$configuration"></x-cart>
             </div>
             <div class="mt-2">
                 <div class="flex justify-start space-x-12 items-end">
@@ -30,6 +30,6 @@
         </div>
     </div>
 
-    @include('purchase.create')
+    @include('purchases.create')
 </div>
 @endsection

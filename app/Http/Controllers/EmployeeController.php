@@ -8,9 +8,9 @@ use Illuminate\View\View;
 
 class EmployeeController extends Controller
 {
-    public function edit(User $employee): View
+    public function show(User $employee): View
     {
-        return view('employees.edit')
+        return view('employees.show')
             ->with('employee', $employee);
     }
 }

@@ -137,17 +137,23 @@
                             @auth
                             <hr>
                             <x-menus.submenu-item
-                                content="Profile"
+                                content="Perfil"
                                 selectable="0"
                                 :href="match(Auth::user()->type) {
                                     'A' => route('administratives.show', ['administrative' => Auth::user()]),
                                     'E' => route('employees.show', ['employee' => Auth::user()]),
-                                    'C' => route('customers.show', ['customer' => Auth::user()->customer]),
+                                    'C' => route('customers.show', ['user' => Auth::user()]),
                                 }"/>
                             <x-menus.submenu-item
-                                content="Change Password"
+                                content="Minhas Compras"
+                                selectable="1"
+                                href="{{ route('purchases.index') }}"
+                                selected="{{ Route::currentRouteName() == 'purchases.index'}}"/>
+                            <x-menus.submenu-item
+                                content="Mudar Palavra-passe"
                                 selectable="0"
                                 href="{{ route('profile.edit.password') }}"/>
+
                             @endauth
                             <hr class="border-gray-200">
                             <form id="form_to_logout_from_menu" method="POST" action="{{ route('logout') }}" class="hidden">

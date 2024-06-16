@@ -12,13 +12,13 @@
                         Clique em "Salvar" para prosseguir para o pagamento.
                     </p>
                 </header>
-                <form method="POST" action="{{ route('purchase.store') }}">
+                <form method="POST" action="{{ route('purchases.store') }}">
                     @csrf
                     <div class="mt-6 space-y-4">
                             @php
                                 $user = Auth::user();
                             @endphp
-                            @include('purchase.shared.fields', ['mode' => 'edit'])
+                            @include('purchases.shared.fields', ['mode' => 'edit'])
                     </div>
                     <div class="flex justify-end mt-6">
                         <div class="font-base text-sm text-gray-700 dark:text-gray-300">

@@ -53,15 +53,24 @@ Route::get('courses/{course}/curriculum', [CourseController::class, 'showCurricu
     ->can('viewCurriculum', Course::class);
 
     
-Route::get('/administratives/{administrative}/edit', [AdministrativeController::class, 'show'])
+Route::get('/administratives/{administrative}', [AdministrativeController::class, 'show'])
         ->name('administratives.show');
         
 
-Route::get('/employees/{employee}/edit', [EmployeeController::class, 'edit'])
+Route::get('/employees/{employee}', [EmployeeController::class, 'show'])
         ->name('employees.show');
 
-Route::get('/customers/{customer}/edit', [CustomerController::class, 'edit'])
+Route::post('customers/', [CustomerController::class, 'store'])
+        ->name('customers.create');
+
+Route::get('/customers/{user}', [CustomerController::class, 'show'])
         ->name('customers.show');
+
+Route::get('/customers/{user}/edit', [CustomerController::class, 'edit'])
+        ->name('customers.edit');
+
+Route::delete('/customers/{user}', [CustomerController::class, 'destroy'])
+        ->name('customers.destroy');
 
 
 /* ----- Non-Verified users ----- */
@@ -130,11 +139,17 @@ Route::middleware('auth', 'verified')->group(function () {
 /* ----- OTHER PUBLIC ROUTES ----- */
 
 
-    Route::post('purchase',[PurchaseController::class,'store'])
-        ->name('purchase.store');
+    Route::post('purchases',[PurchaseController::class,'store'])
+        ->name('purchases.store');
 
-    Route::get('purchase/{purchase}',[PurchaseController::class, 'show'])
-        ->name('purchase.show');
+    Route::get('purchases/{purchase}',[PurchaseController::class, 'show'])
+        ->name('purchases.show');
+
+    Route::get('tickets/{ticket}',[TicketController::class, 'show'])
+        ->name('tickets.show');
+
+    Route::get('purchases',[PurchaseController::class, 'index'])
+        ->name('purchases.index');
 
     Route::post('cart', [CartController::class, 'confirm'])
         ->name('cart.confirm');

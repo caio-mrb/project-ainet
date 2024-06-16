@@ -7,20 +7,20 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
-class CustomerController extends \Illuminate\Routing\Controller
+class CustomerController extends Controller
 {
 
-    use AuthorizesRequests;
+    //use AuthorizesRequests;
 
-    public function __construct()
+    /*public function __construct()
     {
         $this->authorizeResource(Customer::class);
-    }
+    }*/
 
-    public function edit(Customer $customer): View
+    public function show(User $user): View
     {
-        return view('customers.edit')
-            ->with('customer', $customer);
+        return view('customers.show')
+            ->with('user', $user);
     }
 
     

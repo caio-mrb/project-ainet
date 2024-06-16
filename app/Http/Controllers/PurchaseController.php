@@ -76,7 +76,7 @@ class PurchaseController extends Controller
 
         $request->session()->forget('cart');
 
-        $url = route('purchase.show', ['purchase' => $newPurchase]);
+        $url = route('purchases.show', ['purchase' => $newPurchase]);
         $htmlMessage = "Compra <a href='$url'><u>#{$newPurchase->id}</u></a> has been made successfully!";
         
         return back()
@@ -87,13 +87,26 @@ class PurchaseController extends Controller
     public function create(): View
     {
         $cart = session('cart', null);
-        return view('purchase.create')
+        return view('purchases.create')
             ->with('cart', $cart);
     }
 
     
-    public function show(): View
+    public function show(Purchase $purchase): View
     {
-        return view('purchase.show');
+        return view('purchases.show')
+            ->with('purchase',$purchase);
+    }
+
+    public function index(): View
+    {
+        $purchases = collect();
+
+        if(Auth::check()){
+            $purchases = Purchase::where('customer_id', Auth::user()->id)->orderBy('date', 'desc')->get();
+        }
+
+        return view('purchases.index')
+            ->with('purchases',$purchases);
     }
 }
