@@ -84,8 +84,38 @@ Route::get('/customers/{user}/edit', [CustomerController::class, 'edit'])
 Route::delete('/customers/{user}', [CustomerController::class, 'destroy'])
         ->name('customers.destroy');
 
+Route::delete('administratives/{administrative}/photo', [AdministrativeController::class, 'destroyPhoto'])
+        ->name('administratives.photo.destroy')
+        ->can('update', 'administrative');
+
+Route::resource('administratives', AdministrativeController::class);
 
 
+Route::post('purchases',[PurchaseController::class,'store'])
+    ->name('purchases.store');
+
+Route::get('purchases/{purchase}',[PurchaseController::class, 'show'])
+    ->name('purchases.show');
+
+Route::get('tickets/{ticket}',[TicketController::class, 'show'])
+    ->name('tickets.show');
+
+Route::get('purchases',[PurchaseController::class, 'index'])
+    ->name('purchases.index');
+
+Route::post('cart', [CartController::class, 'confirm'])
+    ->name('cart.confirm');
+
+Route::post('cart/{screening}', [CartController::class, 'addToCart'])
+    ->name('cart.add');
+
+Route::delete('cart/{screening}/{seat}', [CartController::class, 'removeFromCart'])
+    ->name('cart.remove');
+
+Route::get('cart', [CartController::class, 'show'])
+    ->name('cart.show');
+
+Route::delete('cart', [CartController::class, 'destroy'])->name('cart.destroy');
 
 
 /* ----- Non-Verified users ----- */
@@ -94,91 +124,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/password', [ProfileController::class, 'editPassword'])->name('profile.edit.password');
     
 });
-
-/* ----- Verified users ----- */
-Route::middleware('auth', 'verified')->group(function () {
-
-    Route::view('/dashboard', 'dashboard')
-        ->name('dashboard');
-
-    Route::delete('courses/{course}/image', [CourseController::class, 'destroyImage'])
-        ->name('courses.image.destroy')
-        ->can('update', Course::class);
-
-    //Course resource routes are protected by CoursePolicy on the controller
-    // The route 'show' is public (for anonymous user)
-    Route::resource('courses', CourseController::class)
-        ->except(['show']);
-
-    //Department resource routes are protected by DepartmentPolicy on the controller
-    Route::resource('departments', DepartmentController::class);
-
-    Route::get('disciplines/my', [DisciplineController::class, 'myDisciplines'])
-        ->name('disciplines.my')
-        ->can('viewMy', Discipline::class);
-
-    //Discipline resource routes are protected by DisciplinePolicy on the controller
-    //Disciplines index and show are public
-    Route::resource('disciplines', DisciplineController::class)->except(['index', 'show']);
-
-    Route::get('teachers/my', [TeacherController::class, 'myTeachers'])
-        ->name('teachers.my')
-        ->can('viewMy', Teacher::class);
-
-    Route::delete('teachers/{teacher}/photo', [TeacherController::class, 'destroyPhoto'])
-        ->name('teachers.photo.destroy')
-        ->can('update', 'teacher');
-
-    //Teacher resource routes are protected by TeacherPolicy on the controller
-    Route::resource('teachers', TeacherController::class);
-
-    Route::get('students/my', [StudentController::class, 'myStudents'])
-        ->name('students.my')
-        ->can('viewMy', Student::class);
-    Route::delete('students/{student}/photo', [StudentController::class, 'destroyPhoto'])
-        ->name('students.photo.destroy')
-        ->can('update', 'student');
-
-    //Student resource routes are protected by StudentPolicy on the controller
-    Route::resource('students', StudentController::class);
-
-    Route::delete('administratives/{administrative}/photo', [AdministrativeController::class, 'destroyPhoto'])
-        ->name('administratives.photo.destroy')
-        ->can('update', 'administrative');
-
-    //Admnistrative resource routes are protected by AdministrativePolicy on the controller
-    Route::resource('administratives', AdministrativeController::class);
-
-});
-
-/* ----- OTHER PUBLIC ROUTES ----- */
-
-
-    Route::post('purchases',[PurchaseController::class,'store'])
-        ->name('purchases.store');
-
-    Route::get('purchases/{purchase}',[PurchaseController::class, 'show'])
-        ->name('purchases.show');
-
-    Route::get('tickets/{ticket}',[TicketController::class, 'show'])
-        ->name('tickets.show');
-
-    Route::get('purchases',[PurchaseController::class, 'index'])
-        ->name('purchases.index');
-
-    Route::post('cart', [CartController::class, 'confirm'])
-        ->name('cart.confirm');
-
-    Route::post('cart/{screening}', [CartController::class, 'addToCart'])
-        ->name('cart.add');
-
-    Route::delete('cart/{screening}/{seat}', [CartController::class, 'removeFromCart'])
-        ->name('cart.remove');
-
-    Route::get('cart', [CartController::class, 'show'])
-        ->name('cart.show');
-
-    Route::delete('cart', [CartController::class, 'destroy'])->name('cart.destroy');
 
 
 require __DIR__ . '/auth.php';

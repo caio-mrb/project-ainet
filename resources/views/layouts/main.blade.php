@@ -41,24 +41,20 @@
                         <x-menus.menu-item content="Filmes" href="{{ route('movies.index') }}" selected="{{ Route::currentRouteName() == 'movies.index'}}" />
 
                         <x-menus.menu-item content="Cinemas" href="{{ route('theaters.index') }}" selected="{{ Route::currentRouteName() == 'theaters.index'}}" />
+                        
                         <x-menus.menu-item content="Sessões" href="{{ route('screenings.index') }}" selected="{{ Route::currentRouteName() == 'screenings.index'}}" />
 
                         <x-menus.menu-item content="Bilhetes" href="{{ route('tickets.index') }}" selected="{{ Route::currentRouteName() == 'tickets.index'}}" />
 
                         <x-menus.menu-item content="Usuários" href="{{ route('customers.index') }}" selected="{{ Route::currentRouteName() == 'customers.index'}}" />
 
-                        {{-- If user has any of the 4 menu options previlege, then it should show the submenu --}}
-                        @if(
-                        Gate::check('viewAny', App\Models\User::class)
-                        )
-                        <!-- Menu Item: Others -->
-                        @can('edit-settings', App\Models\User::class)
                         <x-menus.submenu selectable="0" uniqueName="submenu_others" content="More">
                             <x-menus.submenu-item content="Administratives" selectable="0" href="{{ route('administratives.index') }}" />
                             <hr>
-                            @endcan
                         </x-menus.submenu>
-                        @endif
+
+                        {{-- If user has any of the 4 menu options previlege, then it should show the submenu --}}
+                        
                         <div class="grow"></div>
 
                         <!-- Menu Item: Cart -->
@@ -76,16 +72,6 @@
                                     {{ Auth::user()->name }}
                                 </div>
                                 </x-slot>
-                                @can('viewMy', App\Models\Discipline::class)
-                                <x-menus.submenu-item content="My Disciplines" selectable="0" href="{{ route('disciplines.my') }}" />
-                                @endcan
-                                @can('viewMy', App\Models\Teacher::class)
-                                <x-menus.submenu-item content="My Teachers" selectable="0" href="{{ route('teachers.my') }}" />
-                                @endcan
-                                @can('viewMy', App\Models\Student::class)
-                                <x-menus.submenu-item content="My Students" selectable="0" href="{{ route('students.my') }}" />
-                                <hr>
-                                @endcan
                                 @auth
                                 <hr>
                                 <x-menus.submenu-item content="Perfil" selectable="0" :href="match(Auth::user()->type) {
