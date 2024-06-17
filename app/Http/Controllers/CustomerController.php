@@ -23,11 +23,30 @@ class CustomerController extends Controller
             ->with('user', $user);
     }
 
-    
-    public function index(Request $request){
-        $users = User::paginate(20);
+
+    public function index(Request $request)
+    {
+        $filterByName = $request->query('name');
+        $route = 'customers.index';
+
+        $users = User::all();
+        $userQuery = User::query();
+
+        if ($filterByName) {
+            $userQuery->where(function ($query) use ($filterByName) {
+                $query->where('name', 'like', '%' . $filterByName . '%');
+            });
+        }
+
+
+        $users = $userQuery
+            ->orderBy('name')
+            ->paginate(8)
+            ->withQueryString();
 
         return view('customers.index')
-            ->with('users', $users);
+            ->with('users', $users)
+            ->with('route', $route)
+            ->with('filterByName', $filterByName);
     }
 }

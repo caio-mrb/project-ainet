@@ -49,10 +49,7 @@
 
                         {{-- If user has any of the 4 menu options previlege, then it should show the submenu --}}
                         @if(
-                        Gate::check('viewAny', App\Models\Student::class) ||
-                        Gate::check('viewAny', App\Models\User::class) ||
-                        Gate::check('viewAny', App\Models\Department::class) ||
-                        Gate::check('viewAny', App\Models\Course::class)
+                        Gate::check('viewAny', App\Models\User::class)
                         )
                         <!-- Menu Item: Others -->
                         @can('edit-settings', App\Models\User::class)
