@@ -48,8 +48,11 @@ Route::get('theaters/', [TheaterController::class, 'index'])
 Route::get('screenings/', [ScreeningController::class, 'index'])
     ->name('screenings.index');
 
-Route::get('tickets/', [TicketController::class, 'index'])
+Route::get('tickets/', [TicketController::class, 'handle'])
     ->name('tickets.index');
+
+Route::post('tickets/{ticket}', [TicketController::class, 'validate'])
+    ->name('tickets.validate');
 
 Route::get('customers/', [CustomerController::class, 'index'])
     ->name('customers.index');
