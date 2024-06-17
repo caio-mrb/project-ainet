@@ -17,11 +17,12 @@
             session()->put('total_price', $totalPrice)
         @endphp
         <tbody>
+            @if(session('cart')->count() >= 11)
             <tr class="border-b border-b-gray-400 dark:border-b-gray-500">
                 <td colspan="5"></td>
-                <td class="text-center font-bold">Total<br>{{  " €" . number_format(session('total_price'),2)}}</td>
+                <td class="text-center font-bold">Total<br>{{ "€" . number_format(session('total_price'),2)}}</td>
             </tr>
-            
+            @endif
         @foreach ($cart as $cartItem)
             <tr class="border-b border-b-gray-400 dark:border-b-gray-500">
                 <td class="px-2 py-2 text-left hidden sm:table-cell">{{ $cartItem['screening']->theater->name }}</td>
@@ -42,10 +43,12 @@
         @endforeach
         </tbody>
         <tfoot>
-            <tr class="border-b border-b-gray-400 dark:border-b-gray-500">
-                <td colspan="5"></td>
-                <td class="text-center font-bold">Total<br>{{  " €" . number_format(session('total_price'),2)}}</td>
-            </tr>
+        @if(session('cart')->count() < 11)
+        <tr class="border-b border-b-gray-400 dark:border-b-gray-500">
+            <td colspan="5"></td>
+            <td class="text-center font-bold">Total<br>{{ "€" . number_format(session('total_price'),2)}}</td>
+        </tr>
+            @endif
         </tfoot>
     </table>
 </div>

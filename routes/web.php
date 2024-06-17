@@ -30,6 +30,15 @@ Route::get('/', [MovieController::class, 'index'])
 Route::get('movies/{movie}', [MovieController::class, 'show'])
     ->name('movies.show');
 
+Route::put('movies/{movie}', [MovieController::class, 'update'])
+    ->name('movies.update');
+
+Route::get('movies/{movie}/edit', [MovieController::class, 'edit'])
+    ->name('movies.edit');
+
+Route::delete('movies/{movie}',[MovieController::class,'delete'])
+->name('movies.delete');
+
 Route::get('movies/', [MovieController::class, 'index'])
     ->name('movies.index');
 
@@ -71,6 +80,9 @@ Route::get('/customers/{user}/edit', [CustomerController::class, 'edit'])
 
 Route::delete('/customers/{user}', [CustomerController::class, 'destroy'])
         ->name('customers.destroy');
+
+
+
 
 
 /* ----- Non-Verified users ----- */

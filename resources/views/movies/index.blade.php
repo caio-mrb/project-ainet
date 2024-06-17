@@ -15,9 +15,10 @@
     </div>
 </div>
 @endif
-@if($route == 'movie.index')
-{{ $movies = Movies::all()}}
-
+@if($route == 'movies.index')
+<div class="w-full">
+    <x-movies.table :movies="$movies" class="w-full"></x-movies>
+</div>
 @endif
 
 <div class="p-6">
