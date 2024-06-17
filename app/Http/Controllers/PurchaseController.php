@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\PurchaseFormRequest;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Str;
 use App\Models\Purchase;
 use App\Models\Ticket;
 use App\Services\Payment;
@@ -57,8 +58,6 @@ class PurchaseController extends Controller
             'receipt_pdf_filename' => null
         ];
 
-        
-
         $combinedData = array_merge($validatedData, $sessionData);
 
         $newPurchase = Purchase::create($combinedData);
@@ -67,6 +66,7 @@ class PurchaseController extends Controller
             $ticketData = [
                 'screening_id' => $cartItem['screening']['id'],
                 'seat_id' => $cartItem['seat']['id'],
+                'qrcode_url' => request()->getSchemeAndHttpHost() . '/tickets?token=' . Str::random(60),
                 'purchase_id' => $newPurchase->id,
                 'price' => ($user == null ?  $ticket_price : $ticket_price - $discount),
             ]; 
